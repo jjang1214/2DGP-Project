@@ -47,7 +47,7 @@ move=[
     (1455,0,30,74)
 ]
 
-char3_width = 32
+char3_width = 30
 char3_height = 72
 
 TIME_PER_ACTION = 0.5

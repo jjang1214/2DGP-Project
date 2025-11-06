@@ -5,6 +5,7 @@ import game_world
 
 from character1 import character1 as char1
 from character2 import character2 as char2
+from character3 import character3 as char3
 
 def handle_events():
     event_list = get_events()
@@ -15,7 +16,8 @@ def handle_events():
             game_framework.quit()
         else:
             #char1.handle_event(event)
-            char2.handle_event(event)
+            #char2.handle_event(event)
+            char3.handle_event(event)
 
 
 def init():
@@ -27,9 +29,17 @@ def init():
 
     global char2
 
-    char2 = char2()
-    game_world.add_object(char2, 1)
-    game_world.add_collision_pair('char2:??', char2, None)
+    #char2 = char2()
+    #game_world.add_object(char2, 1)
+    #game_world.add_collision_pair('char2:??', char2, None)
+
+    global char3
+
+    char3 = char3()
+    game_world.add_object(char3, 1)
+    game_world.add_collision_pair('char3:??', char3, None)
+
+
 
 
 def update():
