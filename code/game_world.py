@@ -1,3 +1,6 @@
+w_width=1400
+w_height=800
+
 world = [[] for _ in range(4)]
 
 def add_object(o, depth = 0):
