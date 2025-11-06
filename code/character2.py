@@ -24,19 +24,36 @@ def left_up(e):
 
 
 idle = [
-
+    (48+128*0,0,32,72),
+    (48+128*1,0,32,72),
+    (48+128*2,0,32,72),
+    (48+128*3,0,32,72),
+    (48+128*4,0,32,72),
+    (48+128*5,0,32,72),
+    (48+128*6,0,32,72)
 ]
 
 move=[
-
+    (45,0,36,72),
+    (173,0,32,71),
+    (301,0,29,72),
+    (429,0,26,73),
+    (557,0,29,73),
+    (685,0,31,73),
+    (813,0,36,72),
+    (941,0,32,71),
+    (1069,0,29,72),
+    (1197,0,26,73),
+    (1325,0,29,73),
+    (1453,0,31,73)
 ]
 
-char1_width = 26
-char1_height = 72
+char2_width = 32
+char2_height = 72
 
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION_idle = 9
+FRAMES_PER_ACTION_idle = 7
 FRAMES_PER_ACTION_move = 12
 
 class Idle:
@@ -50,7 +67,7 @@ class Idle:
         pass
 
     def do(self):
-        self.char2.frame = (self.char2.frame + FRAMES_PER_ACTION_idle * ACTION_PER_TIME * game_framework.frame_time) % 9
+        self.char2.frame = (self.char2.frame + FRAMES_PER_ACTION_idle * ACTION_PER_TIME * game_framework.frame_time) % 7
 
     def draw(self):
         frame_data = idle[int(self.char2.frame)]
@@ -79,7 +96,7 @@ class Move:
 
     def do(self):
         self.char2.frame = (self.char2.frame + FRAMES_PER_ACTION_move * ACTION_PER_TIME * game_framework.frame_time) % 12
-        #self.char1.x +=
+        #self.char2.x +=
 
     def draw(self):
         frame_data = move[int(self.char2.frame)]
@@ -121,7 +138,7 @@ class character2:
         draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        return self.x - char1_width/2, self.y - char1_height/2, self.x + char1_width/2, self.y + char1_height/2
+        return self.x - char2_width/2, self.y - char2_height/2, self.x + char2_width/2, self.y + char2_height/2
 
     def handle_collision(self, group, other):
         pass
