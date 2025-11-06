@@ -3,6 +3,7 @@ from sdl2 import SDL_KEYDOWN, SDL_KEYUP, SDLK_RIGHT, SDLK_LEFT
 
 import game_world
 import game_framework
+from game_world import w_width, w_height
 
 from state_machine import StateMachine
 
@@ -23,8 +24,15 @@ def left_up(e):
 
 
 idle = [
-
-
+    (51+128*0,0,26,72),
+    (51+128*1,0,26,72),
+    (51+128*2,0,26,72),
+    (51+128*3,0,26,72),
+    (51+128*4,0,26,72),
+    (51+128*5,0,26,72),
+    (51+128*6,0,26,72),
+    (51+128*7,0,26,72),
+    (51+128*8,0,26,72)
 ]
 
 move=[
@@ -42,9 +50,12 @@ move=[
     (1459,0,28,71)
 ]
 
+char1_width = 26
+char1_height = 72
+
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION_idle = 8
+FRAMES_PER_ACTION_idle = 9
 FRAMES_PER_ACTION_move = 12
 
 class Idle:
@@ -52,22 +63,22 @@ class Idle:
         self.char1 = char1
 
     def enter(self, e):
-        pass
+        self.char1.dir = 0
 
     def exit(self, e):
         pass
 
     def do(self):
-        self.char1.frame = (self.char1.frame + FRAMES_PER_ACTION_idle * ACTION_PER_TIME * game_framework.frame_time) % 8
+        self.char1.frame = (self.char1.frame + FRAMES_PER_ACTION_idle * ACTION_PER_TIME * game_framework.frame_time) % 9
 
     def draw(self):
         frame_data = idle[int(self.char1.frame)]
         left, bottom, width, height = frame_data
 
         if self.char1.face_dir == 1:  # right
-            self.char1.image_move.clip_draw(left, bottom, width, height, self.char1.x, self.char1.y)
+            self.char1.image_idle.clip_draw(left, bottom, width, height, self.char1.x, self.char1.y)
         else:  # left
-            self.char1.image_move.clip_composite_draw(left, bottom, width, height, 0, 'h', self.char1.x, self.char1.y, width, height)
+            self.char1.image_idle.clip_composite_draw(left, bottom, width, height, 0, 'h', self.char1.x, self.char1.y, width, height)
 
 
 
@@ -101,7 +112,7 @@ class Move:
 
 class character1:
     def __init__(self):
-        self.x,self.y = 400,60
+        self.x,self.y = w_width/2, 100
         self.frame = 0
         self.face_dir = 1
         self.dir = 0
@@ -113,8 +124,8 @@ class character1:
         self.state_machine = StateMachine(
             self.IDLE,
             {
-                self.IDLE:{right_down : self.MOVE, left_down : self.MOVE},
-                self.MOVE:{right_up : self.IDLE, left_up : self.IDLE}
+                self.IDLE:{right_down : self.MOVE, left_down : self.MOVE, right_up: self.MOVE, left_up: self.MOVE},
+                self.MOVE:{right_up : self.IDLE, left_up : self.IDLE, right_down: self.IDLE, left_down: self.IDLE}
             }
         )
 
@@ -129,7 +140,7 @@ class character1:
         draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        return self.x - 20, self.y - 40, self.x + 20, self.y + 40
+        return self.x - char1_width/2, self.y - char1_height/2, self.x + char1_width/2, self.y + char1_height/2
 
     def handle_collision(self, group, other):
         pass
