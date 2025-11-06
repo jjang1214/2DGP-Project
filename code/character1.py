@@ -20,6 +20,8 @@ def space_down(e):
 def space_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_SPACE
 
+moved = lambda e: e[0] == 'MOVED'
+
 
 idle = [
     (51+128*0,0,26,72),
@@ -51,7 +53,7 @@ move=[
 char1_width = 26
 char1_height = 72
 
-TIME_PER_ACTION = 0.5
+TIME_PER_ACTION = 0.2
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION_idle = 9
 FRAMES_PER_ACTION_move = 12
@@ -96,7 +98,10 @@ class Move:
         pass
 
     def do(self):
-        self.char1.frame = (self.char1.frame + FRAMES_PER_ACTION_move * ACTION_PER_TIME * game_framework.frame_time) % 12
+        self.char1.frame += FRAMES_PER_ACTION_move * ACTION_PER_TIME * game_framework.frame_time
+        if self.char1.frame >= FRAMES_PER_ACTION_move:
+            self.char1.frame = 0
+            self.char1.state_machine.handle_state_event(('MOVED', None))
 
     def draw(self):
         frame_data = move[int(self.char1.frame)]
@@ -122,7 +127,7 @@ class character1:
             self.IDLE,
             {
                 self.IDLE:{enter_down : self.MOVE, space_down : self.MOVE},
-                self.MOVE:{enter_up : self.IDLE, space_up : self.IDLE},
+                self.MOVE:{moved : self.IDLE},
             }
         )
 
