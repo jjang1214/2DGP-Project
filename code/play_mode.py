@@ -4,6 +4,7 @@ import game_framework
 import game_world
 
 from character1 import character1 as char1
+from character2 import character2 as char2
 
 def handle_events():
     event_list = get_events()
@@ -13,15 +14,22 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
         else:
-            char1.handle_event(event)
+            #char1.handle_event(event)
+            char2.handle_event(event)
 
 
 def init():
     global char1
 
-    char1 = char1()
-    game_world.add_object(char1, 1)
-    game_world.add_collision_pair('char1:??', char1, None)
+    #char1 = char1()
+    #game_world.add_object(char1, 1)
+    #game_world.add_collision_pair('char1:??', char1, None)
+
+    global char2
+
+    char2 = char2()
+    game_world.add_object(char2, 1)
+    game_world.add_collision_pair('char2:??', char2, None)
 
 
 def update():
