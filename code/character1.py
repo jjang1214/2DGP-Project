@@ -22,6 +22,11 @@ def left_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LEFT
 
 
+idle = [
+
+
+]
+
 move=[
     (49,0,36,71),
     (177,0,31,72),
@@ -39,6 +44,7 @@ move=[
 
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION_idle = 8
 FRAMES_PER_ACTION_move = 12
 
 class Idle:
@@ -52,13 +58,16 @@ class Idle:
         pass
 
     def do(self):
-        self.char1.frame = (self.char1.frame + FRAMES_PER_ACTION_move * ACTION_PER_TIME * game_framework.frame_time) % 12
+        self.char1.frame = (self.char1.frame + FRAMES_PER_ACTION_idle * ACTION_PER_TIME * game_framework.frame_time) % 8
 
     def draw(self):
-        if self.char1.face_dir == 1: # right
-            self.char1.image_idle.clip_draw(51 + int(self.char1.frame) * 128, 0, 36, 72, self.char1.x, self.char1.y)
-        else: # face_dir == -1: # left
-            self.char1.image_idle.clip_draw(51 + int(self.char1.frame) * 128, 0, 36, 72, self.char1.x, self.char1.y)
+        frame_data = idle[int(self.char1.frame)]
+        left, bottom, width, height = frame_data
+
+        if self.char1.face_dir == 1:  # right
+            self.char1.image_move.clip_draw(left, bottom, width, height, self.char1.x, self.char1.y)
+        else:  # left
+            self.char1.image_move.clip_composite_draw(left, bottom, width, height, 0, 'h', self.char1.x, self.char1.y, width, height)
 
 
 
