@@ -35,7 +35,6 @@ def create_stairs(get_x, get_y, num):
             y += 50
             stairs.append(Stair(x, y))
             Stair.last_x, Stair.last_y = x, y
-            print(f'{Stair.last_x=}, {Stair.last_y=}')
 
         initstairs = True
 
@@ -48,7 +47,6 @@ def create_stairs(get_x, get_y, num):
 
         stairs.append(Stair(x, y))
         Stair.last_x, Stair.last_y = x, y
-        print(f'{Stair.last_x=}, {Stair.last_y=}')
 
 
 
