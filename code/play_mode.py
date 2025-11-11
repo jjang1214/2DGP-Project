@@ -5,7 +5,7 @@ import game_framework
 import game_world
 
 from background import Background as bg
-from stair import Stair,create_stairs
+from stair import *
 from character1 import character1 as char1
 from character2 import character2 as char2
 from character3 import character3 as char3
@@ -21,7 +21,8 @@ def handle_events():
             game_framework.quit()
         else:
             background.handle_event(event,char1.dir)
-
+            for s in stairs:
+                s.handle_event(event,char1.dir)
             char1.handle_event(event)
             #char2.handle_event(event)
             #char3.handle_event(event)

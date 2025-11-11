@@ -4,6 +4,7 @@ from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
 import game_world
 import game_framework
 from game_world import w_width, w_height
+from stair import character_pattern
 
 from state_machine import StateMachine
 
@@ -89,10 +90,11 @@ class Move:
 
     def enter(self, e):
         if enter_down(e):
-            pass
+            character_pattern.append(self.char1.dir)
 
         elif space_down(e):
             self.char1.dir *= -1
+            character_pattern.append(self.char1.dir)
 
     def exit(self, e):
         pass
