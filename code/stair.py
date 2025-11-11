@@ -3,7 +3,7 @@ from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
 
 from character1 import *
 import random
-
+import game_world
 
 
 def enter_down(e):
@@ -20,19 +20,35 @@ def space_up(e):
 
 
 initstairs = False
+stairs = []
 
-def create_stairs(start_x, start_y):
-    stairs = []
-    x, y = start_x - 70, start_y + 50-63  # 첫 계단: 캐릭터 왼쪽 위
+def create_stairs(get_x, get_y, num):
+    global initstairs, stairs
 
-    global initstairs
     if not initstairs:
-        for i in range(11):
-            stairs.append(Stair(x, y))
+        x, y = get_x - 70, get_y + 50 - 63  # 첫 계단: 캐릭터 왼쪽 위
+        stairs.append(Stair(x, y))
+        Stair.last_x, Stair.last_y = x, y
+        for i in range(num):
             direction = random.choice([-1, 1])  # -1: 왼쪽, 1: 오른쪽
             x += direction * 70
-            y += 50  # 항상 위로 올라감
+            y += 50
+            stairs.append(Stair(x, y))
+            Stair.last_x, Stair.last_y = x, y
+            print(f'{Stair.last_x=}, {Stair.last_y=}')
+
         initstairs = True
+
+    else:
+        x, y = get_x, get_y
+
+        direction = random.choice([-1, 1])  # -1: 왼쪽, 1: 오른쪽
+        x += direction * 70
+        y += 50
+
+        stairs.append(Stair(x, y))
+        Stair.last_x, Stair.last_y = x, y
+        print(f'{Stair.last_x=}, {Stair.last_y=}')
 
 
 
@@ -44,6 +60,10 @@ def create_stairs(start_x, start_y):
 
 
 class Stair:
+    image = None
+
+    last_x = 0
+    last_y = 0
     def __init__(self, x, y, width=70, height=50):
         self.x = x
         self.y = y
@@ -51,13 +71,16 @@ class Stair:
         self.h = height
         self.offset_x = 0
         self.offset_y = 0
-        self.image = load_image('../image/stair.png')
+        if Stair.image is None:
+            Stair.image = load_image('../image/stair.png')
 
     def move(self, direction):
         dx = 70 if direction == 'right' else -70
         dy = 50
         self.offset_x -= dx
         self.offset_y -= dy
+
+
 
     def draw(self):
         self.image.clip_draw(0, 0, 116, 63,

@@ -5,6 +5,7 @@ import game_world
 import game_framework
 from game_world import w_width, w_height
 from character1 import *
+import stair
 
 from state_machine import StateMachine
 
@@ -40,9 +41,25 @@ class Background:
         self.offset_y -= dy
 
 
+        for s in stair.stairs:
+            s.move(direction)
+
+
+        new_stair_list = stair.create_stairs(stair.Stair.last_x, stair.Stair.last_y, 1)
+        new_stair = new_stair_list[-1]
+        new_stair.offset_x = self.offset_x
+        new_stair.offset_y = self.offset_y
+        game_world.add_object(new_stair, 1)
+
+        if len(stair.stairs) > 20:
+            first = stair.stairs.pop(0)
+            try:
+                game_world.remove_object(first)
+            except Exception:
+                pass
+
     def update(self):
         pass
-        #self.sky_alpha = max(0.3, min(1.0, 1.0 - self.offset_y / 2000))
 
     def draw(self):
         # 1. 하늘 반복 (세로 방향, 상하반전 교차)
