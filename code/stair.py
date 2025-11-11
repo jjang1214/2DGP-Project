@@ -19,17 +19,23 @@ def space_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_SPACE
 
 
+initstairs = False
 
-
-def create_stairs(start_x, start_y, count):
+def create_stairs(start_x, start_y):
     stairs = []
     x, y = start_x - 70, start_y + 50-63  # 첫 계단: 캐릭터 왼쪽 위
 
-    for i in range(count):
-        stairs.append(Stair(x, y))
-        direction = random.choice([-1, 1])  # -1: 왼쪽, 1: 오른쪽
-        x += direction * 70
-        y += 50  # 항상 위로 올라감
+    global initstairs
+    if not initstairs:
+        for i in range(11):
+            stairs.append(Stair(x, y))
+            direction = random.choice([-1, 1])  # -1: 왼쪽, 1: 오른쪽
+            x += direction * 70
+            y += 50  # 항상 위로 올라감
+        initstairs = True
+
+
+
 
     return stairs
 

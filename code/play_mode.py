@@ -55,7 +55,7 @@ def init():
     #game_world.add_collision_pair('char3:??', char3, None)
 
     global stairs
-    stairs = create_stairs(char1.x, char1.y, 10)
+    stairs = create_stairs(char1.x, char1.y)
 
     for s in stairs:
         game_world.add_object(s, 0)
