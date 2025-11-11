@@ -21,9 +21,6 @@ def handle_events():
             game_framework.quit()
         else:
             background.handle_event(event,char1.dir)
-            global stairs
-            for s in stairs:
-                s.handle_event(event, char1.dir)
 
             char1.handle_event(event)
             #char2.handle_event(event)
@@ -39,26 +36,26 @@ def init():
     global char1
 
     char1 = char1()
-    game_world.add_object(char1, 1)
+    game_world.add_object(char1, 2)
     game_world.add_collision_pair('char1:??', char1, None)
 
     global char2
 
     #char2 = char2()
-    #game_world.add_object(char2, 1)
+    #game_world.add_object(char2, 2)
     #game_world.add_collision_pair('char2:??', char2, None)
 
     global char3
 
     #char3 = char3()
-    #game_world.add_object(char3, 1)
+    #game_world.add_object(char3, 2)
     #game_world.add_collision_pair('char3:??', char3, None)
 
     global stairs
-    stairs = create_stairs(char1.x, char1.y)
+    stairs = create_stairs(char1.x, char1.y,11)
 
     for s in stairs:
-        game_world.add_object(s, 0)
+        game_world.add_object(s, 1)
 
 
 def update():
