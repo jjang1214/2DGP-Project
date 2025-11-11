@@ -1,11 +1,16 @@
 from pico2d import *
+import random
 
 import game_framework
 import game_world
 
+from background import Background as bg
+from stair import Stair,create_stairs
 from character1 import character1 as char1
 from character2 import character2 as char2
 from character3 import character3 as char3
+
+global stairs
 
 def handle_events():
     event_list = get_events()
@@ -15,12 +20,22 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
         else:
+            background.handle_event(event,char1.dir)
+            global stairs
+            for s in stairs:
+                s.handle_event(event, char1.dir)
+
             char1.handle_event(event)
             #char2.handle_event(event)
             #char3.handle_event(event)
 
 
 def init():
+    global background
+
+    background = bg()
+    game_world.add_object(background, 0)
+
     global char1
 
     char1 = char1()
@@ -39,7 +54,11 @@ def init():
     #game_world.add_object(char3, 1)
     #game_world.add_collision_pair('char3:??', char3, None)
 
+    global stairs
+    stairs = create_stairs(char1.x, char1.y, 10)
 
+    for s in stairs:
+        game_world.add_object(s, 0)
 
 
 def update():
