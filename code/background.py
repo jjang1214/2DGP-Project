@@ -4,7 +4,7 @@ from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
 import game_world
 import game_framework
 from game_world import w_width, w_height
-from character1 import *
+import character1
 import stair
 
 from state_machine import StateMachine
@@ -33,6 +33,7 @@ class Background:
         self.ground_y = self.tukground.h / 2
         self.offset_x = 0
         self.offset_y = 0
+        self.font = load_font('../ENCR10B.TTF',32)
 
     def move(self, direction):
         dx = 70 if direction == 'right' else -70
@@ -100,6 +101,11 @@ class Background:
                 self.tukground.draw(x, ground_y)
             x += self.tukground.w
             flip = not flip
+
+
+
+
+        self.font.draw(w_width*80/100,w_height*80/100,f'Score:{character1.score :^}',(255,0,0))
 
     def get_bb(self):
         pass

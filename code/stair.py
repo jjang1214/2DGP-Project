@@ -126,4 +126,5 @@ class Stair:
         if idx >= 0 and idx < len(stair_pattern):
             if stair_pattern[idx] != character_pattern[idx ]:
                 print(f"{idx + 1}번 계단에서 실패!")
+
                 game_framework.quit()
