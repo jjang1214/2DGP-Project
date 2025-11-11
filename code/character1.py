@@ -53,7 +53,7 @@ move=[
 char1_width = 26
 char1_height = 72
 
-TIME_PER_ACTION = 0.2
+TIME_PER_ACTION = 0.1
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION_idle = 9
 FRAMES_PER_ACTION_move = 12
@@ -115,7 +115,7 @@ class Move:
 
 class character1:
     def __init__(self):
-        self.x,self.y = w_width/2, w_height // 2
+        self.x,self.y = w_width/2, w_height / 2-100
         self.frame = 0
         self.dir = -1
         self.image_idle = load_image('../image/girl1_Idle.png')
