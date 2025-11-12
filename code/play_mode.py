@@ -20,11 +20,11 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
         else:
-            background.handle_event(event,char1.dir)
+            background.handle_event(event,char2.dir)
             for s in stairs:
-                s.handle_event(event,char1.dir)
-            char1.handle_event(event)
-            #char2.handle_event(event)
+                s.handle_event(event,char2.dir)
+            #char1.handle_event(event)
+            char2.handle_event(event)
             #char3.handle_event(event)
 
 
@@ -36,15 +36,15 @@ def init():
 
     global char1
 
-    char1 = char1()
-    game_world.add_object(char1, 2)
-    game_world.add_collision_pair('char1:??', char1, None)
+    #char1 = char1()
+    #game_world.add_object(char1, 2)
+    #game_world.add_collision_pair('char1:??', char1, None)
 
     global char2
 
-    #char2 = char2()
-    #game_world.add_object(char2, 2)
-    #game_world.add_collision_pair('char2:??', char2, None)
+    char2 = char2()
+    game_world.add_object(char2, 2)
+    game_world.add_collision_pair('char2:??', char2, None)
 
     global char3
 
@@ -53,7 +53,7 @@ def init():
     #game_world.add_collision_pair('char3:??', char3, None)
 
     global stairs
-    stairs = create_stairs(char1.x, char1.y,11)
+    stairs = create_stairs(char2.x, char2.y,11)
 
     for s in stairs:
         game_world.add_object(s, 1)
