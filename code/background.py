@@ -27,7 +27,7 @@ def space_up(e):
 
 class Background:
     def __init__(self):
-        self.tukground = load_image('../image/TUK_GROUND.png')
+        self.tukground = load_image('../image/tuk.png')
         self.sky = load_image('../image/daytime.png')
         self.sky_height = self.sky.h
         self.ground_y = self.tukground.h / 2
@@ -91,15 +91,15 @@ class Background:
 
         # 2. 지면 반복 (가로 방향, 좌우반전)
         ground_y = self.ground_y + self.offset_y
-        x = -self.tukground.w * 2 + self.offset_x
+        x = w_width//2#-self.tukground.w * 2 + self.offset_x
         flip = False
         while x < w_width + self.tukground.w:
             if flip:
                 self.tukground.clip_composite_draw(0, 0, self.tukground.w, self.tukground.h, 0, 'h', x, ground_y,
-                                                   self.tukground.w, self.tukground.h)
+                                                   self.tukground.w*2, self.tukground.h*2)
             else:
-                self.tukground.draw(x, ground_y)
-            x += self.tukground.w
+                self.tukground.draw(x, ground_y,self.tukground.w*2, self.tukground.h*2)
+            x += self.tukground.w*2
             flip = not flip
 
 
