@@ -39,8 +39,9 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_3:
             data.main_character = 3
 
-def init():
+def init(*args):
     global background, image1, image2, image3, font
+    
     background = load_image('../image/tuk.png')
     image1 = load_image('../image/girl1_Idle.png')
     image2 = load_image('../image/girl2_Idle.png')

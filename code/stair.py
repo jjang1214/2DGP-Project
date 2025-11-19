@@ -121,9 +121,4 @@ class Stair:
         pass
 
     def handle_event(self, event, char_dir):
-        idx = len(data.character_pattern) - 1
-        if idx >= 0 and idx < len(data.stair_pattern):
-            if data.stair_pattern[idx] != data.character_pattern[idx ]:
-                print(f"{idx + 1}번 계단에서 실패!")
-
-                game_framework.quit()
+        pass
