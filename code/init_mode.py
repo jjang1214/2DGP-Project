@@ -13,7 +13,7 @@ from character3 import idle3, ACTION_PER_TIME3, FRAMES_PER_ACTION_idle3
 
 init_running = True
 
-
+background = None
 image1 = None
 image2 = None
 image3 = None
@@ -40,7 +40,8 @@ def handle_events():
             data.main_character = 3
 
 def init():
-    global image1, image2, image3, font
+    global background, image1, image2, image3, font
+    background = load_image('../image/tuk.png')
     image1 = load_image('../image/girl1_Idle.png')
     image2 = load_image('../image/girl2_Idle.png')
     image3 = load_image('../image/girl3_Idle.png')
@@ -60,8 +61,9 @@ def update():
 
 def draw():
     clear_canvas()
-    global image1, image2, image3, font,frame1,frame2,frame3
+    global background, image1, image2, image3, font,frame1,frame2,frame3
 
+    background.draw(w_width/2, w_height/2,w_width, w_height)
 
     frame1 = (frame1 + FRAMES_PER_ACTION_idle1 * 2 * game_framework.frame_time) % FRAMES_PER_ACTION_idle1
     frame_data1 = idle1[int(frame1)]
