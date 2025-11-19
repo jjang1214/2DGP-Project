@@ -93,7 +93,9 @@ def finish():
     del image1, image2, image3
 
     data.main_character = 0
-    #data.score = 0
+    data.score1 = 0
+    data.score2 = 0
+    data.score3 = 0
 
 
 def pause(): pass
