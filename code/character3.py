@@ -58,7 +58,7 @@ ACTION_PER_TIME3 = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION_idle3 = 6
 FRAMES_PER_ACTION_move = 12
 
-score = 0
+
 
 class Idle:
     def __init__(self, char3):
@@ -97,8 +97,8 @@ class Move:
             self.char3.dir *= -1
             data.character_pattern.append(self.char3.dir)
 
-        global score
-        score += 1
+
+        data.score3 += 1
 
     def exit(self, e):
         pass

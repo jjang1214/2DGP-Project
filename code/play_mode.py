@@ -10,7 +10,7 @@ import character1
 import character2
 import character3
 import data
-import init_mode
+import init_mode,result_mode
 
 global stairs
 
@@ -96,8 +96,8 @@ def update():
         if data.stair_pattern[idx] != data.character_pattern[idx]:
             print(f"{idx + 1}번 계단에서 실패!")
 
-            game_framework.quit()
-            #game_framework.change_mode(init_mode, data.main_character)
+            #game_framework.quit()
+            game_framework.change_mode(result_mode, data.main_character)
 
 def draw():
     clear_canvas()
@@ -117,7 +117,7 @@ def finish():
     elif play_character == 3 and char3:
         char3.x = w_width / 2
         char3.y = w_height / 2 - 100
-    data.main_character = 0
+
     data.stair_pattern.clear()
     data.character_pattern.clear()
     game_world.clear()
