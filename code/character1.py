@@ -4,7 +4,7 @@ from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
 import game_world
 import game_framework
 from game_world import w_width, w_height
-from stair import character_pattern
+import data
 
 from state_machine import StateMachine
 
@@ -24,7 +24,7 @@ def space_up(e):
 moved = lambda e: e[0] == 'MOVED'
 
 
-idle = [
+idle1 = [
     (51+128*0,0,26,72),
     (51+128*1,0,26,72),
     (51+128*2,0,26,72),
@@ -54,10 +54,10 @@ move=[
 char1_width = 26
 char1_height = 72
 
-TIME_PER_ACTION = 0.1
-ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION_idle = 9
-FRAMES_PER_ACTION_move = 12
+TIME_PER_ACTION1 = 0.1
+ACTION_PER_TIME1 = 1.0 / TIME_PER_ACTION1
+FRAMES_PER_ACTION_idle1 = 9
+FRAMES_PER_ACTION_move1 = 12
 
 score = 0
 
@@ -72,10 +72,10 @@ class Idle:
         pass
 
     def do(self):
-        self.char1.frame = (self.char1.frame + FRAMES_PER_ACTION_idle * ACTION_PER_TIME * game_framework.frame_time) % 9
+        self.char1.frame = (self.char1.frame + FRAMES_PER_ACTION_idle1 * ACTION_PER_TIME1 * game_framework.frame_time) % 9
 
     def draw(self):
-        frame_data = idle[int(self.char1.frame)]
+        frame_data = idle1[int(self.char1.frame)]
         left, bottom, width, height = frame_data
 
         if self.char1.dir == 1:  # right
@@ -92,11 +92,11 @@ class Move:
 
     def enter(self, e):
         if enter_down(e):
-            character_pattern.append(self.char1.dir)
+            data.character_pattern.append(self.char1.dir)
 
         elif space_down(e):
             self.char1.dir *= -1
-            character_pattern.append(self.char1.dir)
+            data.character_pattern.append(self.char1.dir)
 
         global score
         score += 1
@@ -105,8 +105,8 @@ class Move:
         pass
 
     def do(self):
-        self.char1.frame += FRAMES_PER_ACTION_move * ACTION_PER_TIME * game_framework.frame_time
-        if self.char1.frame >= FRAMES_PER_ACTION_move:
+        self.char1.frame += FRAMES_PER_ACTION_move1 * ACTION_PER_TIME1 * game_framework.frame_time
+        if self.char1.frame >= FRAMES_PER_ACTION_move1:
             self.char1.frame = 0
             self.char1.state_machine.handle_state_event(('MOVED', None))
 

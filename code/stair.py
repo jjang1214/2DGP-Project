@@ -1,10 +1,11 @@
 from pico2d import load_image, draw_rectangle
 from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
 
-from character1 import *
+
 import random
 import game_world
 import game_framework
+import data
 
 
 def enter_down(e):
@@ -23,8 +24,7 @@ def space_up(e):
 initstairs = False
 stairs = []
 
-stair_pattern = []
-character_pattern = []
+
 
 stair_count = 0
 
@@ -35,7 +35,7 @@ def create_stairs(get_x, get_y, num):
         x, y = get_x - 70, get_y + 50 - 63  # 첫 계단: 캐릭터 왼쪽 위
         stairs.append(Stair(x, y))
         direction = -1
-        stair_pattern.append(direction)
+        data.stair_pattern.append(direction)
         print(f'direction{0}={direction}')
         Stair.last_x, Stair.last_y = x, y
 
@@ -44,7 +44,7 @@ def create_stairs(get_x, get_y, num):
             x += direction * 70
             y += 50
             stairs.append(Stair(x, y))
-            stair_pattern.append(direction)
+            data.stair_pattern.append(direction)
             print(f'direction{i+1}={direction}')
             Stair.last_x, Stair.last_y = x, y
 
@@ -61,7 +61,7 @@ def create_stairs(get_x, get_y, num):
 
         direction = random.choice([-1, 1])  # -1: 왼쪽, 1: 오른쪽
         print(f'direction{stair_count}={direction}')
-        stair_pattern.append(direction)
+        data.stair_pattern.append(direction)
         x += direction * 70
         y += 50
 
@@ -121,10 +121,9 @@ class Stair:
         pass
 
     def handle_event(self, event, char_dir):
-        global character_pattern, stair_pattern
-        idx = len(character_pattern) - 1
-        if idx >= 0 and idx < len(stair_pattern):
-            if stair_pattern[idx] != character_pattern[idx ]:
+        idx = len(data.character_pattern) - 1
+        if idx >= 0 and idx < len(data.stair_pattern):
+            if data.stair_pattern[idx] != data.character_pattern[idx ]:
                 print(f"{idx + 1}번 계단에서 실패!")
 
                 game_framework.quit()

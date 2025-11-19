@@ -4,7 +4,7 @@ from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
 import game_world
 import game_framework
 from game_world import w_width, w_height
-from stair import character_pattern
+import data
 
 from state_machine import StateMachine
 
@@ -26,7 +26,7 @@ def space_up(e):
 moved = lambda e: e[0] == 'MOVED'
 
 
-idle = [
+idle3 = [
     (49,0,30,72),
     (177,0,30,72),
     (304,0,31,73),
@@ -54,8 +54,8 @@ char3_width = 30
 char3_height = 72
 
 TIME_PER_ACTION = 0.1
-ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION_idle = 6
+ACTION_PER_TIME3 = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION_idle3 = 6
 FRAMES_PER_ACTION_move = 12
 
 score = 0
@@ -71,10 +71,10 @@ class Idle:
         pass
 
     def do(self):
-        self.char3.frame = (self.char3.frame + FRAMES_PER_ACTION_idle * ACTION_PER_TIME * game_framework.frame_time) % 6
+        self.char3.frame = (self.char3.frame + FRAMES_PER_ACTION_idle3 * ACTION_PER_TIME3 * game_framework.frame_time) % 6
 
     def draw(self):
-        frame_data = idle[int(self.char3.frame)]
+        frame_data = idle3[int(self.char3.frame)]
         left, bottom, width, height = frame_data
 
         if self.char3.dir == 1:  # right
@@ -91,11 +91,11 @@ class Move:
 
     def enter(self, e):
         if enter_down(e):
-            character_pattern.append(self.char3.dir)
+            data.character_pattern.append(self.char3.dir)
 
         elif space_down(e):
             self.char3.dir *= -1
-            character_pattern.append(self.char3.dir)
+            data.character_pattern.append(self.char3.dir)
 
         global score
         score += 1
@@ -104,7 +104,7 @@ class Move:
         pass
 
     def do(self):
-        self.char3.frame += FRAMES_PER_ACTION_move * ACTION_PER_TIME * game_framework.frame_time
+        self.char3.frame += FRAMES_PER_ACTION_move * ACTION_PER_TIME3 * game_framework.frame_time
         if self.char3.frame >= FRAMES_PER_ACTION_move:
             self.char3.frame = 0
             self.char3.state_machine.handle_state_event(('MOVED', None))

@@ -4,8 +4,9 @@ from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
 import game_world
 import game_framework
 from game_world import w_width, w_height
-import character1
 import stair
+import data
+import character1,character2,character3
 
 from state_machine import StateMachine
 
@@ -104,8 +105,13 @@ class Background:
 
 
 
+        if data.main_character ==1:
+            self.font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{character1.score :^}', (255, 0, 0))
+        elif data.main_character == 2:
+            self.font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{character2.score :^}', (255, 0, 0))
+        elif data.main_character == 3:
+            self.font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{character3.score :^}', (255, 0, 0))
 
-        self.font.draw(w_width*80/100,w_height*80/100,f'Score:{character1.score :^}',(255,0,0))
 
     def get_bb(self):
         pass

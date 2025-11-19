@@ -4,7 +4,7 @@ from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
 import game_world
 import game_framework
 from game_world import w_width, w_height
-from stair import character_pattern
+import data
 
 from state_machine import StateMachine
 
@@ -26,7 +26,7 @@ def space_up(e):
 moved = lambda e: e[0] == 'MOVED'
 
 
-idle = [
+idle2 = [
     (48+128*0,0,32,72),
     (48+128*1,0,32,72),
     (48+128*2,0,32,72),
@@ -55,8 +55,8 @@ char2_width = 32
 char2_height = 72
 
 TIME_PER_ACTION = 0.1
-ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION_idle = 7
+ACTION_PER_TIME2 = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION_idle2 = 7
 FRAMES_PER_ACTION_move = 12
 
 score = 0
@@ -72,10 +72,10 @@ class Idle:
         pass
 
     def do(self):
-        self.char2.frame = (self.char2.frame + FRAMES_PER_ACTION_idle * ACTION_PER_TIME * game_framework.frame_time) % 7
+        self.char2.frame = (self.char2.frame + FRAMES_PER_ACTION_idle2 * ACTION_PER_TIME2 * game_framework.frame_time) % 7
 
     def draw(self):
-        frame_data = idle[int(self.char2.frame)]
+        frame_data = idle2[int(self.char2.frame)]
         left, bottom, width, height = frame_data
 
         if self.char2.dir == 1:  # right
@@ -92,11 +92,11 @@ class Move:
 
     def enter(self, e):
         if enter_down(e):
-            character_pattern.append(self.char2.dir)
+            data.character_pattern.append(self.char2.dir)
 
         elif space_down(e):
             self.char2.dir *= -1
-            character_pattern.append(self.char2.dir)
+            data.character_pattern.append(self.char2.dir)
 
         global score
         score += 1
@@ -105,7 +105,7 @@ class Move:
         pass
 
     def do(self):
-        self.char2.frame += FRAMES_PER_ACTION_move * ACTION_PER_TIME * game_framework.frame_time
+        self.char2.frame += FRAMES_PER_ACTION_move * ACTION_PER_TIME2 * game_framework.frame_time
         if self.char2.frame >= FRAMES_PER_ACTION_move:
             self.char2.frame = 0
             self.char2.state_machine.handle_state_event(('MOVED', None))
