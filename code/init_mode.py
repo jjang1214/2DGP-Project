@@ -40,8 +40,16 @@ def handle_events():
             data.main_character = 3
 
 def init(*args):
+    data.score1 = 0
+    data.score2 = 0
+    data.score3 = 0
+    data.main_character = 0
+    data.stair_pattern.clear()
+    data.character_pattern.clear()
+    game_world.clear()
+
     global background, image1, image2, image3, font
-    
+
     background = load_image('../image/tuk.png')
     image1 = load_image('../image/girl1_Idle.png')
     image2 = load_image('../image/girl2_Idle.png')
