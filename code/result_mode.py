@@ -75,13 +75,13 @@ def draw():
 
     if data.main_character == 1:
         image1.clip_draw(left1, bottom1, width1, height1, w_width / 2, w_height / 2, 80, 100)
-        font.draw(w_width /2, w_height * 80 / 100, f'Score:{data.score1 :^}', (255, 0, 0))
+        font.draw(w_width *4.5/10, w_height * 80 / 100, f'Score:{data.score1 :^}', (255, 0, 0))
     elif data.main_character == 2:
         image2.clip_draw(left2, bottom2, width2, height2, w_width /2, w_height / 2, 80, 100)
-        font.draw(w_width /2, w_height * 80 / 100, f'Score:{data.score2 :^}', (255, 0, 0))
+        font.draw(w_width *4.5/10, w_height * 80 / 100, f'Score:{data.score2 :^}', (255, 0, 0))
     elif data.main_character == 3:
         image3.clip_draw(left3, bottom3, width3, height3, w_width /2, w_height / 2, 80, 100)
-        font.draw(w_width /2, w_height * 80 / 100, f'Score:{data.score3 :^}', (255, 0, 0))
+        font.draw(w_width *4.5/10, w_height * 80 / 100, f'Score:{data.score3 :^}', (255, 0, 0))
 
 
 
