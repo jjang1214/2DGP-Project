@@ -146,10 +146,10 @@ class character1:
 
     def draw(self):
         self.state_machine.draw()
-        draw_rectangle(*self.get_bb())
+        #draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        return self.x - char1_width/2, self.y - char1_height/2, self.x + char1_width/2, self.y + char1_height/2
+        pass#return self.x - char1_width/2, self.y - char1_height/2, self.x + char1_width/2, self.y + char1_height/2
 
     def handle_collision(self, group, other):
         pass

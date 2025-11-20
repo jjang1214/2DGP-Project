@@ -64,7 +64,7 @@ class Background:
         pass
 
     def draw(self):
-        # 1. 하늘 반복 (세로 방향, 상하반전 교차)
+        # 하늘
         sky_start_y = self.ground_y + self.tukground.h / 2 + self.offset_y
         y = sky_start_y
         row = 0
@@ -90,7 +90,7 @@ class Background:
             y += self.sky.h
             row += 1
 
-        # 2. 지면 반복 (가로 방향, 좌우반전)
+        # 지면
         ground_y = self.ground_y + self.offset_y
         x = w_width//2#-self.tukground.w * 2 + self.offset_x
         flip = False

@@ -104,15 +104,14 @@ class Stair:
         self.image.clip_draw(0, 0, 116, 63,
                              self.x + self.offset_x, self.y + self.offset_y,
                              self.w, self.h)
-        draw_rectangle(self.x - self.w / 2 + self.offset_x,
-                       self.y - self.h / 2 + self.offset_y,
-                       self.x + self.w / 2 + self.offset_x,
-                       self.y + self.h / 2 + self.offset_y)
+        #draw_rectangle(self.x - self.w / 2 + self.offset_x,
+                       #self.y - self.h / 2 + self.offset_y,
+                       #self.x + self.w / 2 + self.offset_x,
+                       #self.y + self.h / 2 + self.offset_y)
 
 
     def get_bb(self):
-        return (self.x - self.w / 2, self.y - self.h / 2,
-                self.x + self.w / 2, self.y + self.h / 2)
+        pass#return (self.x - self.w / 2, self.y - self.h / 2, self.x + self.w / 2, self.y + self.h / 2)
 
     def handle_collision(self, group, other):
         pass
