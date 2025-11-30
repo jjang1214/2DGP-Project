@@ -3,6 +3,7 @@ from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
 
 import game_world
 import game_framework
+import data
 from game_world import w_width, w_height
 import stair
 import data
@@ -64,49 +65,56 @@ class Background:
         pass
 
     def draw(self):
-        # 하늘
-        sky_start_y = self.ground_y + self.tukground.h / 2 + self.offset_y
-        y = sky_start_y
-        row = 0
-        while y < w_height + self.sky_height:
-            x = -self.sky.w * 2 + self.offset_x
+        if data.playing_mode == 1:
+            # 하늘
+            sky_start_y = self.ground_y + self.tukground.h / 2 + self.offset_y
+            y = sky_start_y
+            row = 0
+            while y < w_height + self.sky_height:
+                x = -self.sky.w * 2 + self.offset_x
+                flip = False
+                while x < w_width + self.sky.w:
+                    if row % 2 == 0:
+                        # 그대로
+                        if flip:
+                            self.sky.clip_composite_draw(0, 0, self.sky.w, self.sky.h, 0, 'h', x, y, self.sky.w, self.sky.h)
+                        else:
+                            self.sky.draw(x, y)
+                    else:
+                        # 상하반전
+                        if flip:
+                            self.sky.clip_composite_draw(0, 0, self.sky.w, self.sky.h, 0, 'hv', x, y, self.sky.w,
+                                                         self.sky.h)
+                        else:
+                            self.sky.clip_composite_draw(0, 0, self.sky.w, self.sky.h, 0, 'v', x, y, self.sky.w, self.sky.h)
+                    x += self.sky.w
+                    flip = not flip
+                y += self.sky.h
+                row += 1
+
+            # 지면
+            ground_y = self.ground_y + self.offset_y
+            x = w_width//2#-self.tukground.w * 2 + self.offset_x
             flip = False
-            while x < w_width + self.sky.w:
-                if row % 2 == 0:
-                    # 그대로
-                    if flip:
-                        self.sky.clip_composite_draw(0, 0, self.sky.w, self.sky.h, 0, 'h', x, y, self.sky.w, self.sky.h)
-                    else:
-                        self.sky.draw(x, y)
+            while x < w_width + self.tukground.w:
+                if flip:
+                    self.tukground.clip_composite_draw(0, 0, self.tukground.w, self.tukground.h, 0, 'h', x, ground_y,
+                                                       self.tukground.w*2, self.tukground.h*2)
                 else:
-                    # 상하반전
-                    if flip:
-                        self.sky.clip_composite_draw(0, 0, self.sky.w, self.sky.h, 0, 'hv', x, y, self.sky.w,
-                                                     self.sky.h)
-                    else:
-                        self.sky.clip_composite_draw(0, 0, self.sky.w, self.sky.h, 0, 'v', x, y, self.sky.w, self.sky.h)
-                x += self.sky.w
+                    self.tukground.draw(x, ground_y,self.tukground.w*2, self.tukground.h*2)
+                x += self.tukground.w*2
                 flip = not flip
-            y += self.sky.h
-            row += 1
-
-        # 지면
-        ground_y = self.ground_y + self.offset_y
-        x = w_width//2#-self.tukground.w * 2 + self.offset_x
-        flip = False
-        while x < w_width + self.tukground.w:
-            if flip:
-                self.tukground.clip_composite_draw(0, 0, self.tukground.w, self.tukground.h, 0, 'h', x, ground_y,
-                                                   self.tukground.w*2, self.tukground.h*2)
-            else:
-                self.tukground.draw(x, ground_y,self.tukground.w*2, self.tukground.h*2)
-            x += self.tukground.w*2
-            flip = not flip
 
 
 
 
-        self.font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{data.p1_score :^}', (255, 0, 0))
+            #self.font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{data.p1_score :^}', (255, 0, 0))
+
+
+
+
+        elif data.playing_mode == 2:
+            pass
 
 
 
@@ -117,10 +125,13 @@ class Background:
         pass
 
     def handle_event(self,event,char_dir):
-        if event.type == SDL_KEYDOWN:
-            if event.key == SDLK_RETURN:
-                self.move('right' if char_dir == 1 else 'left')
-            elif event.key == SDLK_SPACE:
-                self.move('left' if char_dir == 1 else 'right')
+        if data.isp1alive:
+            if event.type == SDL_KEYDOWN:
+                if event.key == SDLK_RETURN:
+                    self.move('right' if char_dir == 1 else 'left')
+                elif event.key == SDLK_SPACE:
+                    self.move('left' if char_dir == 1 else 'right')
+        else:
+            return
 
 
