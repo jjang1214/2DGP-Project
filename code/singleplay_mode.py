@@ -18,7 +18,9 @@ char1 = None
 char2 = None
 char3 = None
 
+current_time = None
 
+font = None
 
 def handle_events():
     event_list = get_events()
@@ -50,7 +52,9 @@ def handle_events():
 
 
 def init(*args):
-    global background, char1, char2, char3, stairs
+    global background, char1, char2, char3, stairs, font
+
+    font = load_font('../ENCR10B.TTF', 32)
 
 
     background = bg()
@@ -90,29 +94,39 @@ def update():
     game_world.update()
     game_world.handle_collisions()
 
-    idx = len(data.character_pattern) - 1
+    idx = len(data.p1_pattern) - 1
     if idx >= 0 and idx < len(data.stair_pattern):
-        if data.stair_pattern[idx] != data.character_pattern[idx]:
+        if data.stair_pattern[idx] != data.p1_pattern[idx]:
             print(f"{idx + 1}번 계단에서 실패!")
+            data.isp1alive = False
+            global current_time
+            if current_time == None:
+                current_time = get_time()
+            else:
+                if get_time() - current_time > 2:
+                    #game_framework.quit()
+                    game_framework.change_mode(result_mode)
 
-            #game_framework.quit()
-            game_framework.change_mode(result_mode)
+
 
 def draw():
+    global font
     clear_canvas()
     game_world.render()
+    font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{data.p1_score :^}', (255, 0, 0))
     update_canvas()
 
 
 def finish():
-    global stairs
+    global stairs, current_time
 
     stairs.clear()
     stair.initstairs = False
     stair.stair_count = 0
     data.stair_pattern.clear()
-    data.character_pattern.clear()
+    data.p1_pattern.clear()
     game_world.clear()
+    current_time = None
 
 
     if data.p1_character == 1:
@@ -126,6 +140,8 @@ def finish():
     elif data.p1_character == 3:
         char3.x = w_width / 2
         char3.y = w_height / 2 - 100
+
+    data.isp1alive = True
 
 
 
