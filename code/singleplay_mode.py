@@ -5,14 +5,14 @@ import game_framework
 import game_world
 from game_world import w_width, w_height
 from background import Background as bg
-from stair import *
+import stair
 import character1
 import character2
 import character3
 import data
 import initc_mode,result_mode
 
-global stairs
+#global stairs
 
 char1 = None
 char2 = None
@@ -26,8 +26,7 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            game_framework.quit()
-            #game_framework.change_mode(init_mode, data.main_character)
+            game_framework.change_mode(initc_mode)
         else:
             if data.p1_character == 1:
                 background.handle_event(event,char1.dir)
@@ -64,21 +63,21 @@ def init(*args):
         game_world.add_object(char1, 2)
         #game_world.add_collision_pair('character1:??', char1, None)
 
-        stairs = create_stairs(char1.x, char1.y, 11)
+        stairs = stair.create_stairs(char1.x, char1.y, 11)
 
     elif data.p1_character == 2:
         char2 = character2.character2()
         game_world.add_object(char2, 2)
         #game_world.add_collision_pair('character2:??', character2, None)
 
-        stairs = create_stairs(char2.x, char2.y, 11)
+        stairs = stair.create_stairs(char2.x, char2.y, 11)
 
     elif data.p1_character == 3:
         char3 = character3.character3()
         game_world.add_object(char3, 2)
         #game_world.add_collision_pair('character3:??', char3, None)
 
-        stairs = create_stairs(char3.x, char3.y, 11)
+        stairs = stair.create_stairs(char3.x, char3.y, 11)
 
 
 
@@ -106,6 +105,16 @@ def draw():
 
 
 def finish():
+    global stairs
+
+    stairs.clear()
+    stair.initstairs = False
+    stair.stair_count = 0
+    data.stair_pattern.clear()
+    data.character_pattern.clear()
+    game_world.clear()
+
+
     if data.p1_character == 1:
         char1.x = w_width / 2
         char1.y = w_height / 2 - 100
@@ -118,9 +127,7 @@ def finish():
         char3.x = w_width / 2
         char3.y = w_height / 2 - 100
 
-    data.stair_pattern.clear()
-    data.character_pattern.clear()
-    game_world.clear()
+
 
 def pause(): pass
 def resume(): pass

@@ -1,8 +1,12 @@
 from pico2d import *
+
 from game_world import w_width, w_height
 import game_framework
+import initm_mode
 import singleplay_mode
+import multiplay_mode
 import data
+import time
 
 
 
@@ -24,28 +28,46 @@ frame2 = 0
 frame3 = 0
 
 isp1selected = False
+isp2selected = False
+
+current_time = 0.0
+start_time = None
 
 def handle_events():
+    global start_time, isp1selected, isp2selected
+
     event_list = get_events()
     for event in event_list:
         if data.playing_mode == 1:
             if event.type == SDL_QUIT:
                 game_framework.quit()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                game_framework.quit()
+                game_framework.change_mode(initm_mode)
             elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
                 data.p1_character = 1
+                isp1selected = True
+                start_time = get_time()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_2:
                 data.p1_character = 2
+                isp1selected = True
+                start_time = get_time()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_3:
                 data.p1_character = 3
+                isp1selected = True
+                start_time = get_time()
 
         elif data.playing_mode == 2:
-            global isp1selected
             if event.type == SDL_QUIT:
                 game_framework.quit()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                game_framework.quit()
+                if not isp1selected:
+                    game_framework.change_mode(initm_mode)
+                elif isp1selected and not isp2selected:
+                    data.p1_character = 0
+                    isp1selected = False
+                elif isp1selected and isp2selected:
+                    data.p2_character = 0
+                    isp2selected = False
             elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
                 if not isp1selected:
                     data.p1_character = 1
@@ -55,6 +77,9 @@ def handle_events():
                         pass
                     else:
                         data.p2_character = 1
+                        isp2selected = True
+                        start_time = get_time()
+
             elif event.type == SDL_KEYDOWN and event.key == SDLK_2:
                 if not isp1selected:
                     data.p1_character = 2
@@ -64,6 +89,8 @@ def handle_events():
                         pass
                     else:
                         data.p2_character = 2
+                        isp2selected = True
+                        start_time = get_time()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_3:
                 if not isp1selected:
                     data.p1_character = 3
@@ -73,10 +100,13 @@ def handle_events():
                         pass
                     else:
                         data.p2_character = 3
+                        isp2selected = True
+                        start_time = get_time()
 
 def init(*args):
-    global isp1selected
+    global isp1selected,isp2selected
     isp1selected = False
+    isp2selected = False
 
     data.p1_score = 0
     data.p2_score = 0
@@ -98,15 +128,18 @@ def init(*args):
 
 
 def update():
+    global start_time
     if data.playing_mode == 1:
-        if data.p1_character != 0:
-            game_framework.change_mode(singleplay_mode)
+        if isp1selected and start_time is not None:
+            current_time = get_time()
+            if current_time - start_time > 1.5:
+                game_framework.change_mode(singleplay_mode)
+
     elif data.playing_mode == 2:
-        if data.p1_character != 0 and data.p2_character != 0:
-            game_framework.change_mode(singleplay_mode)
-
-
-
+        if isp1selected and isp2selected and start_time is not None:
+            current_time = get_time()
+            if current_time - start_time > 1.5:
+                game_framework.change_mode(multiplay_mode)
 
 
 def draw():
@@ -127,24 +160,48 @@ def draw():
     frame_data3 = idle3[int(frame3)]
     left3, bottom3, width3, height3 = frame_data3
 
+    def get_color(char_num):
+        if data.p1_character == char_num:
+            return (0, 255, 0)  # P1 → 초록색
+        elif data.p2_character == char_num:
+            return (0, 0, 255)  # P2 → 파란색
+        else:
+            return (255, 0, 0)  # 선택되지 않음 → 빨간색
+
+
     if data.playing_mode == 1:
-        font.draw(w_width * 1 / 10, w_height * 60 / 100, f'[1] Character1', (255, 0, 0))
-        font.draw(w_width * 4 / 10, w_height * 60 / 100, f'[2] Character2', (255, 0, 0))
-        font.draw(w_width * 7 / 10, w_height * 60 / 100, f'[3] Character3', (255, 0, 0))
+        font.draw(w_width * 1 / 10, w_height * 60 / 100, f'[1] Character1', get_color(1))
+        font.draw(w_width * 4 / 10, w_height * 60 / 100, f'[2] Character2', get_color(2))
+        font.draw(w_width * 7 / 10, w_height * 60 / 100, f'[3] Character3', get_color(3))
 
         image1.clip_draw(left1, bottom1, width1, height1, w_width * 2 / 10, w_height * 50 / 100, 80, 100)
         image2.clip_draw(left2, bottom2, width2, height2, w_width * 5 / 10, w_height * 50 / 100, 80, 100)
         image3.clip_draw(left3, bottom3, width3, height3, w_width * 8 / 10, w_height * 50 / 100, 80, 100)
 
     elif data.playing_mode == 2:
-        #font.draw(w_width*3.5/10, w_height * 90 / 100, f'Choose Character(1~3)', (255, 0, 0))
-        font.draw(w_width * 1 / 10, w_height * 90 / 100, f'[1] Character1', (255, 0, 0))
-        font.draw(w_width * 4 / 10, w_height * 90 / 100, f'[2] Character2', (255, 0, 0))
-        font.draw(w_width * 7 / 10, w_height * 90 / 100, f'[3] Character3', (255, 0, 0))
+        font.draw(w_width * 1 / 10, w_height * 90 / 100, f'[1] Character1', get_color(1))
+        font.draw(w_width * 4 / 10, w_height * 90 / 100, f'[2] Character2', get_color(2))
+        font.draw(w_width * 7 / 10, w_height * 90 / 100, f'[3] Character3', get_color(3))
 
         image1.clip_draw(left1, bottom1, width1, height1, w_width*2/10,w_height* 80 / 100,80,100)
         image2.clip_draw(left2, bottom2, width2, height2, w_width*5/10,w_height* 80 / 100,80,100)
         image3.clip_draw(left3, bottom3, width3, height3, w_width*8/10,w_height* 80 / 100,80,100)
+
+        if isp1selected:
+            if data.p1_character == 1:
+                image1.clip_draw(left1, bottom1, width1, height1, w_width * 4 / 10, w_height * 50 / 100, 80, 100)
+            elif data.p1_character == 2:
+                image2.clip_draw(left2, bottom2, width2, height2, w_width * 4 / 10, w_height * 50 / 100, 80, 100)
+            elif data.p1_character == 3:
+                image3.clip_draw(left3, bottom3, width3, height3, w_width * 4 / 10, w_height * 50 / 100, 80, 100)
+
+        if isp2selected:
+            if data.p2_character == 1:
+                image1.clip_draw(left1, bottom1, width1, height1, w_width * 7 / 10, w_height * 50 / 100, 80, 100)
+            elif data.p2_character == 2:
+                image2.clip_draw(left2, bottom2, width2, height2, w_width * 7 / 10, w_height * 50 / 100, 80, 100)
+            elif data.p2_character == 3:
+                image3.clip_draw(left3, bottom3, width3, height3, w_width * 7 / 10, w_height * 50 / 100, 80, 100)
 
     update_canvas()
 

@@ -32,7 +32,8 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_2:
             data.playing_mode = 2
         elif event.type == SDL_KEYDOWN and event.key == SDLK_3:
-            data.playing_mode = 3
+            pass
+            #data.playing_mode = 3
 
 def init(*args):
     data.playing_mode = 0
