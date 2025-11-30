@@ -1,7 +1,7 @@
 from pico2d import *
 from game_world import w_width, w_height
 import game_framework
-import init_mode
+import initc_mode
 import data
 
 from stair import *

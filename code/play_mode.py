@@ -10,7 +10,7 @@ import character1
 import character2
 import character3
 import data
-import init_mode,result_mode
+import initc_mode,result_mode
 
 global stairs
 
