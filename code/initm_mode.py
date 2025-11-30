@@ -9,8 +9,6 @@ from character1 import idle1, ACTION_PER_TIME1, FRAMES_PER_ACTION_idle1
 from character2 import idle2, ACTION_PER_TIME2, FRAMES_PER_ACTION_idle2
 from character3 import idle3, ACTION_PER_TIME3, FRAMES_PER_ACTION_idle3
 
-init_running = True
-
 background = None
 image1 = None
 image2 = None
@@ -21,7 +19,6 @@ frame1 = 0
 frame2 = 0
 frame3 = 0
 
-a = None
 
 def handle_events():
     event_list = get_events()
@@ -30,10 +27,18 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
-
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
+            data.playing_mode = 1
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_2:
+            data.playing_mode = 2
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_3:
+            data.playing_mode = 3
 
 def init(*args):
-    global background, image1, image2, image3, font, result_time
+    data.playing_mode = 0
+    game_world.clear()
+
+    global background, image1, image2, image3, font
 
     background = load_image('../image/tuk.png')
     image1 = load_image('../image/girl1_Idle.png')
@@ -42,22 +47,15 @@ def init(*args):
 
     font = load_font('../ENCR10B.TTF', 32)
 
-    result_time = get_time()
-
-
 def update():
-    global result_time
-    if get_time() - result_time >= 5.0:
-        result_time = get_time()
-        game_framework.quit()
-        #game_framework.change_mode(init_mode,a)
-
+    if data.playing_mode != 0:
+        game_framework.change_mode(initc_mode)
 
 def draw():
     clear_canvas()
-    global background, image1, image2, image3, font, frame1, frame2, frame3
+    global background, image1, image2, image3, font,frame1,frame2,frame3
 
-    background.draw(w_width / 2, w_height / 2, w_width, w_height)
+    background.draw(w_width/2, w_height/2,w_width, w_height)
 
     frame1 = (frame1 + FRAMES_PER_ACTION_idle1 * 2 * game_framework.frame_time) % FRAMES_PER_ACTION_idle1
     frame_data1 = idle1[int(frame1)]
@@ -71,32 +69,22 @@ def draw():
     frame_data3 = idle3[int(frame3)]
     left3, bottom3, width3, height3 = frame_data3
 
+    #font.draw(w_width*4/10, w_height * 80 / 100, f'Choose Mode', (255, 0, 0))
 
+    font.draw(w_width * 2 / 10, w_height * 60 / 100, f'[1]Single Player', (255, 0, 0))
+    font.draw(w_width * 5.5 / 10, w_height * 60 / 100, f'[2]Multiplayer', (255, 0, 0))
 
-    if data.p1_character == 1:
-        image1.clip_draw(left1, bottom1, width1, height1, w_width / 2, w_height / 2, 80, 100)
-    elif data.p1_character == 2:
-        image2.clip_draw(left2, bottom2, width2, height2, w_width /2, w_height / 2, 80, 100)
-    elif data.p1_character == 3:
-        image3.clip_draw(left3, bottom3, width3, height3, w_width /2, w_height / 2, 80, 100)
+    image1.clip_draw(left1, bottom1, width1, height1, w_width*3/10,w_height/2,80,100)
 
-    font.draw(w_width * 4.5 / 10, w_height * 80 / 100, f'Score:{data.p1_score :^}', (255, 0, 0))
-
-
+    image2.clip_draw(left2, bottom2, width2, height2, w_width*6/10,w_height/2,80,100)
+    image3.clip_draw(left3, bottom3, width3, height3, w_width*7/10,w_height/2,80,100)
 
     update_canvas()
 
 
 def finish():
-    global image1, image2, image3
-    del image1, image2, image3
-
-    data.main_character = 0
-    data.p1_score= 0
-    data.p2_score = 0
-
+    global background,image1, image2, image3
+    del background,image1, image2, image3
 
 def pause(): pass
-
-
 def resume(): pass

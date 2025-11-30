@@ -105,12 +105,9 @@ class Background:
 
 
 
-        if data.main_character ==1:
-            self.font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{data.score1 :^}', (255, 0, 0))
-        elif data.main_character == 2:
-            self.font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{data.score2 :^}', (255, 0, 0))
-        elif data.main_character == 3:
-            self.font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{data.score3 :^}', (255, 0, 0))
+
+        self.font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{data.p1_score :^}', (255, 0, 0))
+
 
 
     def get_bb(self):

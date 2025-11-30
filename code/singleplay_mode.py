@@ -18,7 +18,7 @@ char1 = None
 char2 = None
 char3 = None
 
-play_character = 0
+
 
 def handle_events():
     event_list = get_events()
@@ -29,19 +29,19 @@ def handle_events():
             game_framework.quit()
             #game_framework.change_mode(init_mode, data.main_character)
         else:
-            if play_character == 1:
+            if data.p1_character == 1:
                 background.handle_event(event,char1.dir)
                 for s in stairs:
                     s.handle_event(event, char1.dir)
                 char1.handle_event(event)
 
-            elif play_character == 2:
+            elif data.p1_character == 2:
                 background.handle_event(event,char2.dir)
                 for s in stairs:
                     s.handle_event(event, char2.dir)
                 char2.handle_event(event)
 
-            elif play_character == 3:
+            elif data.p1_character == 3:
                 background.handle_event(event, char3.dir)
                 for s in stairs:
                     s.handle_event(event, char3.dir)
@@ -51,30 +51,29 @@ def handle_events():
 
 
 def init(*args):
-    global background,play_character, char1, char2, char3, stairs
+    global background, char1, char2, char3, stairs
 
-    play_character = data.main_character
 
     background = bg()
     game_world.add_object(background, 0)
 
 
 
-    if play_character == 1:
+    if data.p1_character == 1:
         char1 = character1.character1()
         game_world.add_object(char1, 2)
         #game_world.add_collision_pair('character1:??', char1, None)
 
         stairs = create_stairs(char1.x, char1.y, 11)
 
-    elif play_character == 2:
+    elif data.p1_character == 2:
         char2 = character2.character2()
         game_world.add_object(char2, 2)
         #game_world.add_collision_pair('character2:??', character2, None)
 
         stairs = create_stairs(char2.x, char2.y, 11)
 
-    elif play_character == 3:
+    elif data.p1_character == 3:
         char3 = character3.character3()
         game_world.add_object(char3, 2)
         #game_world.add_collision_pair('character3:??', char3, None)
@@ -107,15 +106,15 @@ def draw():
 
 
 def finish():
-    if play_character == 1 and char1:
+    if data.p1_character == 1:
         char1.x = w_width / 2
         char1.y = w_height / 2 - 100
 
-    elif play_character == 2 and char2:
+    elif data.p1_character == 2:
         char2.x = w_width / 2
         char2.y = w_height / 2 - 100
 
-    elif play_character == 3 and char3:
+    elif data.p1_character == 3:
         char3.x = w_width / 2
         char3.y = w_height / 2 - 100
 

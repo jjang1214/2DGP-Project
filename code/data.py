@@ -1,8 +1,10 @@
-import init_mode, play_mode
-
 stair_pattern = []
 character_pattern = []
-score1 = 0
-score2 = 0
-score3 = 0
-main_character = 0
+
+playing_mode = 0
+p1_character = 0
+p2_character = 0
+p1_score = 0
+p2_score = 0
+is_p1active = True
+is_p2active = True

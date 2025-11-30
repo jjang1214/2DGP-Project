@@ -103,8 +103,10 @@ class Move:
             if data.stair_pattern[idx] != data.character_pattern[idx]:
                 pass
             else:
-                data.score2 += 1
-
+                if data.p1_character == 2:
+                    data.p1_score += 1
+                elif data.p2_character == 2:
+                    data.p1_score += 1
     def exit(self, e):
         pass
 
