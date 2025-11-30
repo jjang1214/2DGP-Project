@@ -32,13 +32,14 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_RETURN:
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_r:
             global restart
             restart = True
 
 
 def init(*args):
-    global background, image1, image2, image3, font, result_time
+    global background, image1, image2, image3, font, result_time, restart
+    restart = False
 
     background = load_image('../image/tuk.png')
     image1 = load_image('../image/girl1_Idle.png')
@@ -87,7 +88,7 @@ def draw():
 
     font.draw(w_width * 4.5 / 10, w_height * 80 / 100, f'Score:{data.p1_score :^}', (255, 0, 0))
 
-    font.draw(w_width * 3.5 / 10, w_height * 40 / 100, f'Press Enter to restart', (255,0,128))
+    font.draw(w_width * 3.5 / 10, w_height * 40 / 100, f'Press R to restart', (255,0,128))
 
 
 

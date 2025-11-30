@@ -42,7 +42,11 @@ def handle_events():
             if event.type == SDL_QUIT:
                 game_framework.quit()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                game_framework.change_mode(initm_mode)
+                if isp1selected:
+                    isp1selected = False
+                    data.p1_character = 0
+                elif not isp1selected:
+                    game_framework.change_mode(initm_mode)
             elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
                 data.p1_character = 1
                 isp1selected = True
