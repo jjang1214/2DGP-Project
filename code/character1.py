@@ -1,5 +1,5 @@
-from pico2d import load_image, draw_rectangle
-from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
+from pico2d import load_image, draw_rectangle, delay, get_time
+from sdl2 import SDL_KEYDOWN, SDL_KEYUP, SDLK_RETURN, SDLK_SPACE, SDLK_LSHIFT, SDLK_LCTRL
 
 import game_world
 import game_framework
@@ -20,6 +20,18 @@ def space_down(e):
 
 def space_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_SPACE
+
+def lshift_down(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LSHIFT
+
+def lshift_up(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LSHIFT
+
+def lctrl_down(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LCTRL
+
+def lctrl_up(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LCTRL
 
 moved = lambda e: e[0] == 'MOVED'
 
@@ -59,7 +71,7 @@ ACTION_PER_TIME1 = 1.0 / TIME_PER_ACTION1
 FRAMES_PER_ACTION_idle1 = 9
 FRAMES_PER_ACTION_move1 = 12
 
-
+current_time = None
 
 class Idle:
     def __init__(self, char1):
@@ -91,22 +103,35 @@ class Move:
         self.char1 = char1
 
     def enter(self, e):
-        if enter_down(e):
-            data.character_pattern.append(self.char1.dir)
+        if data.p1_character == 1:
+            if enter_down(e):
+                data.p1_pattern.append(self.char1.dir)
 
-        elif space_down(e):
-            self.char1.dir *= -1
-            data.character_pattern.append(self.char1.dir)
+            elif space_down(e):
+                self.char1.dir *= -1
+                data.p1_pattern.append(self.char1.dir)
 
-        idx = len(data.character_pattern) - 1
-        if idx >= 0 and idx < len(data.stair_pattern):
-            if data.stair_pattern[idx] != data.character_pattern[idx]:
-                pass
-            else:
-                if data.p1_character == 1:
+            idx = len(data.p1_pattern) - 1
+            if idx >= 0 and idx < len(data.stair_pattern):
+                if data.stair_pattern[idx] != data.p1_pattern[idx]:
+                    pass
+                else:
                     data.p1_score += 1
-                elif data.p2_character == 1:
-                    data.p1_score += 1
+
+        elif data.p2_character == 1:
+            if lshift_down(e):
+                data.p2_pattern.append(self.char1.dir)
+
+            elif lctrl_down(e):
+                self.char1.dir *= -1
+                data.p2_pattern.append(self.char1.dir)
+
+            idx = len(data.p2_pattern) - 1
+            if idx >= 0 and idx < len(data.stair_pattern):
+                if data.stair_pattern[idx] != data.p2_pattern[idx]:
+                    pass
+                else:
+                    data.p2_score += 1
 
 
 
@@ -140,19 +165,53 @@ class character1:
 
         self.IDLE=Idle(self)
         self.MOVE=Move(self)
-        self.state_machine = StateMachine(
-            self.IDLE,
-            {
-                self.IDLE:{enter_down : self.MOVE, space_down : self.MOVE},
-                self.MOVE:{moved : self.IDLE},
-            }
-        )
+        if data.p1_character == 1:
+            self.state_machine = StateMachine(
+                self.IDLE,
+                {
+                    self.IDLE:{enter_down : self.MOVE, space_down : self.MOVE},
+                    self.MOVE:{moved : self.IDLE},
+                }
+            )
+        if data.p2_character == 1:
+            self.state_machine = StateMachine(
+                self.IDLE,
+                {
+                    self.IDLE:{lshift_down : self.MOVE, lctrl_down : self.MOVE},
+                    self.MOVE:{moved : self.IDLE},
+                }
+            )
 
     def update(self):
+        global current_time
+
+        if data.p1_character == 1:
+            if data.isp1alive:
+                current_time = None
+            if not data.isp1alive:
+                if current_time == None:
+                    current_time = get_time()
+                else:
+                    if get_time() - current_time > 1:
+                        self.y -= 10.0
+
+        if data.p2_character == 1:
+            if data.isp2alive:
+                current_time = None
+            if not data.isp2alive:
+                if current_time == None:
+                    current_time = get_time()
+                else:
+                    if get_time() - current_time > 1:
+                        self.y -= 10.0
+
         self.state_machine.update()
 
     def handle_event(self, event):
-        self.state_machine.handle_state_event(('INPUT', event))
+        if data.isp1alive:
+            self.state_machine.handle_state_event(('INPUT', event))
+        else:
+            return
 
     def draw(self):
         self.state_machine.draw()
