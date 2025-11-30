@@ -95,8 +95,8 @@ def draw():
 
 
 def finish():
-    global image1, image2, image3
-    del image1, image2, image3
+    global background, image1, image2, image3
+    del background, image1, image2, image3
 
 def pause(): pass
 def resume(): pass
