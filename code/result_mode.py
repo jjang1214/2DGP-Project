@@ -1,4 +1,6 @@
 from pico2d import *
+
+import initm_mode
 from game_world import w_width, w_height
 import game_framework
 import initc_mode
@@ -9,7 +11,7 @@ from character1 import idle1, ACTION_PER_TIME1, FRAMES_PER_ACTION_idle1
 from character2 import idle2, ACTION_PER_TIME2, FRAMES_PER_ACTION_idle2
 from character3 import idle3, ACTION_PER_TIME3, FRAMES_PER_ACTION_idle3
 
-init_running = True
+
 
 background = None
 image1 = None
@@ -21,7 +23,7 @@ frame1 = 0
 frame2 = 0
 frame3 = 0
 
-a = None
+restart = False
 
 def handle_events():
     event_list = get_events()
@@ -30,6 +32,9 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_RETURN:
+            global restart
+            restart = True
 
 
 def init(*args):
@@ -47,10 +52,10 @@ def init(*args):
 
 def update():
     global result_time
-    if get_time() - result_time >= 5.0:
-        result_time = get_time()
-        game_framework.quit()
-        #game_framework.change_mode(init_mode,a)
+    #if get_time() - result_time >= 5.0:
+        #result_time = get_time()
+    if restart:
+        game_framework.change_mode(initm_mode)
 
 
 def draw():
@@ -81,6 +86,9 @@ def draw():
         image3.clip_draw(left3, bottom3, width3, height3, w_width /2, w_height / 2, 80, 100)
 
     font.draw(w_width * 4.5 / 10, w_height * 80 / 100, f'Score:{data.p1_score :^}', (255, 0, 0))
+
+    font.draw(w_width * 3.5 / 10, w_height * 40 / 100, f'Press Enter to restart', (255,0,128))
+
 
 
 
