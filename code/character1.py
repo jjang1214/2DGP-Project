@@ -54,7 +54,7 @@ move=[
 char1_width = 26
 char1_height = 72
 
-TIME_PER_ACTION1 = 0.1
+TIME_PER_ACTION1 = 0.05
 ACTION_PER_TIME1 = 1.0 / TIME_PER_ACTION1
 FRAMES_PER_ACTION_idle1 = 9
 FRAMES_PER_ACTION_move1 = 12
@@ -98,8 +98,15 @@ class Move:
             self.char1.dir *= -1
             data.character_pattern.append(self.char1.dir)
 
+        idx = len(data.character_pattern) - 1
+        if idx >= 0 and idx < len(data.stair_pattern):
+            if data.stair_pattern[idx] != data.character_pattern[idx]:
+                pass
+            else:
+                data.score1 += 1
 
-        data.score1 += 1
+
+
 
     def exit(self, e):
         pass
