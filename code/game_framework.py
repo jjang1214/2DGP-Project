@@ -4,7 +4,7 @@ frame_time = 0.0
 running = None
 stack = None
 
-def change_mode(mode,main_character):
+def change_mode(mode):
     global stack
     if (len(stack) > 0):
         # execute the current mode's finish function
@@ -12,7 +12,7 @@ def change_mode(mode,main_character):
         # remove the current mode
         stack.pop()
     stack.append(mode)
-    mode.init(main_character)
+    mode.init()
 
 
 def push_mode(mode):

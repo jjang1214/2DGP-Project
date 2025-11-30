@@ -11,7 +11,7 @@ from character1 import idle1, ACTION_PER_TIME1, FRAMES_PER_ACTION_idle1
 from character2 import idle2, ACTION_PER_TIME2, FRAMES_PER_ACTION_idle2
 from character3 import idle3, ACTION_PER_TIME3, FRAMES_PER_ACTION_idle3
 
-init_running = True
+
 
 background = None
 image1 = None
@@ -60,9 +60,8 @@ def init(*args):
 
 
 def update():
-    global init_running
     if data.main_character != 0:
-        game_framework.change_mode(play_mode, data.main_character)
+        game_framework.change_mode(play_mode)
 
 
 

@@ -50,10 +50,10 @@ def handle_events():
 
 
 
-def init(main_character):
+def init(*args):
     global background,play_character, char1, char2, char3, stairs
 
-    play_character = main_character
+    play_character = data.main_character
 
     background = bg()
     game_world.add_object(background, 0)
@@ -98,7 +98,7 @@ def update():
             print(f"{idx + 1}번 계단에서 실패!")
 
             #game_framework.quit()
-            game_framework.change_mode(result_mode, data.main_character)
+            game_framework.change_mode(result_mode)
 
 def draw():
     clear_canvas()
