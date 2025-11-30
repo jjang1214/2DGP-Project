@@ -128,7 +128,7 @@ class Move:
 
 class character3:
     def __init__(self):
-        self.x,self.y = w_width/2, w_height // 2
+        self.x,self.y = w_width/2, w_height // 2-100
         self.frame = 0
         self.dir = -1
         self.image_idle = load_image('../image/girl3_Idle.png')
