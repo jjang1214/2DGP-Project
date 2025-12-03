@@ -48,7 +48,7 @@ idle1 = [
     (51+128*8,0,26,72)
 ]
 
-move=[
+move1=[
     (49,0,36,71),
     (177,0,31,72),
     (304,0,29,73),
@@ -146,7 +146,7 @@ class Move:
             self.char1.state_machine.handle_state_event(('MOVED', None))
 
     def draw(self):
-        frame_data = move[int(self.char1.frame)]
+        frame_data = move1[int(self.char1.frame)]
         left, bottom, width, height = frame_data
 
         if self.char1.dir == 1:  # right

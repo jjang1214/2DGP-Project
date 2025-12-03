@@ -1,5 +1,5 @@
-from pico2d import load_image, draw_rectangle
-from sdl2 import SDL_KEYDOWN, SDL_KEYUP,SDLK_RETURN, SDLK_SPACE
+from pico2d import load_image, draw_rectangle, get_time
+from sdl2 import SDL_KEYDOWN, SDL_KEYUP, SDLK_RETURN, SDLK_SPACE, SDLK_LSHIFT, SDLK_LCTRL
 
 import game_world
 import game_framework
@@ -23,6 +23,18 @@ def space_down(e):
 def space_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_SPACE
 
+def lshift_down(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LSHIFT
+
+def lshift_up(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LSHIFT
+
+def lctrl_down(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LCTRL
+
+def lctrl_up(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LCTRL
+
 moved = lambda e: e[0] == 'MOVED'
 
 
@@ -35,7 +47,7 @@ idle3 = [
     (689,0,30,72)
 ]
 
-move=[
+move3=[
     (46,0,35,73),
     (176,0,29,72),
     (304,0,26,73),
@@ -56,9 +68,11 @@ char3_height = 72
 TIME_PER_ACTION = 0.1
 ACTION_PER_TIME3 = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION_idle3 = 6
-FRAMES_PER_ACTION_move = 12
+FRAMES_PER_ACTION_move3 = 12
 
 
+
+current_time = None
 
 class Idle:
     def __init__(self, char3):
@@ -71,7 +85,7 @@ class Idle:
         pass
 
     def do(self):
-        self.char3.frame = (self.char3.frame + FRAMES_PER_ACTION_idle3 * ACTION_PER_TIME3 * game_framework.frame_time) % 6
+        self.char3.frame = (self.char3.frame + FRAMES_PER_ACTION_idle3 * ACTION_PER_TIME3 * game_framework.frame_time) % FRAMES_PER_ACTION_idle3
 
     def draw(self):
         frame_data = idle3[int(self.char3.frame)]
@@ -90,34 +104,50 @@ class Move:
         self.char3 = char3
 
     def enter(self, e):
-        if enter_down(e):
-            data.character_pattern.append(self.char3.dir)
+        if data.p1_character == 3:
+            if enter_down(e):
+                data.p1_pattern.append(self.char3.dir)
 
-        elif space_down(e):
-            self.char3.dir *= -1
-            data.character_pattern.append(self.char3.dir)
+            elif space_down(e):
+                self.char3.dir *= -1
+                data.p1_pattern.append(self.char3.dir)
 
-        idx = len(data.character_pattern) - 1
-        if idx >= 0 and idx < len(data.stair_pattern):
-            if data.stair_pattern[idx] != data.character_pattern[idx]:
-                pass
-            else:
-                if data.p1_character == 3:
+            idx = len(data.p1_pattern) - 1
+            if idx >= 0 and idx < len(data.stair_pattern):
+                if data.stair_pattern[idx] != data.p1_pattern[idx]:
+                    pass
+                else:
                     data.p1_score += 1
-                elif data.p2_character == 3:
-                    data.p1_score += 1
+
+        elif data.p2_character == 1:
+            if lshift_down(e):
+                data.p2_pattern.append(self.char3.dir)
+
+            elif lctrl_down(e):
+                self.char3.dir *= -1
+                data.p2_pattern.append(self.char3.dir)
+
+            idx = len(data.p2_pattern) - 1
+            if idx >= 0 and idx < len(data.stair_pattern):
+                if data.stair_pattern[idx] != data.p2_pattern[idx]:
+                    pass
+                else:
+                    data.p2_score += 1
+
+
+
 
     def exit(self, e):
         pass
 
     def do(self):
-        self.char3.frame += FRAMES_PER_ACTION_move * ACTION_PER_TIME3 * game_framework.frame_time
-        if self.char3.frame >= FRAMES_PER_ACTION_move:
+        self.char3.frame += FRAMES_PER_ACTION_move3 * ACTION_PER_TIME3 * game_framework.frame_time
+        if self.char3.frame >= FRAMES_PER_ACTION_move3:
             self.char3.frame = 0
             self.char3.state_machine.handle_state_event(('MOVED', None))
 
     def draw(self):
-        frame_data = move[int(self.char3.frame)]
+        frame_data = move3[int(self.char3.frame)]
         left, bottom, width, height = frame_data
 
         if self.char3.dir == 1:  # right
@@ -128,34 +158,71 @@ class Move:
 
 class character3:
     def __init__(self):
-        self.x,self.y = w_width/2, w_height // 2-100
+        self.x,self.y = w_width/2, w_height / 2-100
         self.frame = 0
         self.dir = -1
         self.image_idle = load_image('../image/girl3_Idle.png')
         self.image_move = load_image('../image/girl3_Walk.png')
+        self.image_exclamation = load_image('../image/exclamation_mark.png')
 
         self.IDLE=Idle(self)
         self.MOVE=Move(self)
-        self.state_machine = StateMachine(
-            self.IDLE,
-            {
-                self.IDLE: {enter_down: self.MOVE, space_down: self.MOVE},
-                self.MOVE: {moved: self.IDLE},
-            }
-        )
+        if data.p1_character == 3:
+            self.state_machine = StateMachine(
+                self.IDLE,
+                {
+                    self.IDLE:{enter_down : self.MOVE, space_down : self.MOVE},
+                    self.MOVE:{moved : self.IDLE},
+                }
+            )
+        if data.p2_character == 3:
+            self.state_machine = StateMachine(
+                self.IDLE,
+                {
+                    self.IDLE:{lshift_down : self.MOVE, lctrl_down : self.MOVE},
+                    self.MOVE:{moved : self.IDLE},
+                }
+            )
 
     def update(self):
+        global current_time
+
+        if data.p1_character == 3:
+            if data.isp1alive:
+                current_time = None
+            if not data.isp1alive:
+                if current_time == None:
+                    current_time = get_time()
+                else:
+                    if get_time() - current_time > 1:
+                        self.y -= 10.0
+
+        if data.p2_character == 3:
+            if data.isp2alive:
+                current_time = None
+            if not data.isp2alive:
+                if current_time == None:
+                    current_time = get_time()
+                else:
+                    if get_time() - current_time > 1:
+                        self.y -= 10.0
+
         self.state_machine.update()
 
     def handle_event(self, event):
-        self.state_machine.handle_state_event(('INPUT', event))
+        if data.isp1alive:
+            self.state_machine.handle_state_event(('INPUT', event))
+        else:
+            return
 
     def draw(self):
         self.state_machine.draw()
+        if not data.isp1alive:
+            self.image_exclamation.draw(self.x, self.y+char3_height/2+40,40,40)
         #draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        pass#return self.x - char3_width/2, self.y - char3_height/2, self.x + char3_width/2, self.y + char3_height/2
+        pass#return self.x - char1_width/2, self.y - char1_height/2, self.x + char1_width/2, self.y + char1_height/2
 
     def handle_collision(self, group, other):
         pass
