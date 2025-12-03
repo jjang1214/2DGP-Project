@@ -172,7 +172,7 @@ class character3:
                 self.IDLE,
                 {
                     self.IDLE:{enter_down : self.MOVE, space_down : self.MOVE},
-                    self.MOVE:{moved : self.IDLE},
+                    self.MOVE:{moved : self.IDLE, enter_down : self.MOVE, space_down : self.MOVE},
                 }
             )
         if data.p2_character == 3:
@@ -180,7 +180,7 @@ class character3:
                 self.IDLE,
                 {
                     self.IDLE:{lshift_down : self.MOVE, lctrl_down : self.MOVE},
-                    self.MOVE:{moved : self.IDLE},
+                    self.MOVE:{moved : self.IDLE, enter_down : self.MOVE, space_down : self.MOVE},
                 }
             )
 
