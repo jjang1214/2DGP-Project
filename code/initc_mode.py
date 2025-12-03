@@ -117,7 +117,8 @@ def init(*args):
     data.p1_character = 0
     data.p2_character = 0
     data.stair_pattern.clear()
-    data.character_pattern.clear()
+    data.p1_pattern.clear()
+    data.p2_pattern.clear()
     game_world.clear()
 
     global background, image1, image2, image3, font
