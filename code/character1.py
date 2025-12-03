@@ -84,7 +84,7 @@ class Idle:
         pass
 
     def do(self):
-        self.char1.frame = (self.char1.frame + FRAMES_PER_ACTION_idle1 * ACTION_PER_TIME1 * game_framework.frame_time) % 9
+        self.char1.frame = (self.char1.frame + FRAMES_PER_ACTION_idle1 * ACTION_PER_TIME1 * game_framework.frame_time) % FRAMES_PER_ACTION_idle1
 
     def draw(self):
         frame_data = idle1[int(self.char1.frame)]
@@ -217,7 +217,7 @@ class character1:
     def draw(self):
         self.state_machine.draw()
         if not data.isp1alive:
-            self.image_exclamation.draw(self.x, self.y+36+40,40,40)
+            self.image_exclamation.draw(self.x, self.y+char1_height/2+40,40,40)
         #draw_rectangle(*self.get_bb())
 
     def get_bb(self):
