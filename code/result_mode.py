@@ -78,17 +78,17 @@ def draw():
     left3, bottom3, width3, height3 = frame_data3
 
 
+    if data.playing_mode == 1:
+        if data.p1_character == 1:
+            image1.clip_draw(left1, bottom1, width1, height1, w_width / 2, w_height / 2, 80, 100)
+        elif data.p1_character == 2:
+            image2.clip_draw(left2, bottom2, width2, height2, w_width /2, w_height / 2, 80, 100)
+        elif data.p1_character == 3:
+            image3.clip_draw(left3, bottom3, width3, height3, w_width /2, w_height / 2, 80, 100)
 
-    if data.p1_character == 1:
-        image1.clip_draw(left1, bottom1, width1, height1, w_width / 2, w_height / 2, 80, 100)
-    elif data.p1_character == 2:
-        image2.clip_draw(left2, bottom2, width2, height2, w_width /2, w_height / 2, 80, 100)
-    elif data.p1_character == 3:
-        image3.clip_draw(left3, bottom3, width3, height3, w_width /2, w_height / 2, 80, 100)
+        font.draw(w_width * 4.5 / 10, w_height * 80 / 100, f'Score:{data.p1_score :^}', (255, 0, 0))
 
-    font.draw(w_width * 4.5 / 10, w_height * 80 / 100, f'Score:{data.p1_score :^}', (255, 0, 0))
-
-    font.draw(w_width * 3.5 / 10, w_height * 40 / 100, f'Press R to restart', (255,0,128))
+        font.draw(w_width * 3.5 / 10, w_height * 40 / 100, f'Press R to restart', (255,0,128))
 
 
 
