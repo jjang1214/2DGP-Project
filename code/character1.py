@@ -1,4 +1,4 @@
-from pico2d import load_image, draw_rectangle, delay, get_time
+from pico2d import load_image, draw_rectangle, get_time
 from sdl2 import SDL_KEYDOWN, SDL_KEYUP, SDLK_RETURN, SDLK_SPACE, SDLK_LSHIFT, SDLK_LCTRL
 
 import game_world
@@ -162,6 +162,7 @@ class character1:
         self.dir = -1
         self.image_idle = load_image('../image/girl1_Idle.png')
         self.image_move = load_image('../image/girl1_Walk.png')
+        self.image_exclamation = load_image('../image/exclamation_mark.png')
 
         self.IDLE=Idle(self)
         self.MOVE=Move(self)
@@ -215,6 +216,8 @@ class character1:
 
     def draw(self):
         self.state_machine.draw()
+        if not data.isp1alive:
+            self.image_exclamation.draw(self.x, self.y+36+40,40,40)
         #draw_rectangle(*self.get_bb())
 
     def get_bb(self):
