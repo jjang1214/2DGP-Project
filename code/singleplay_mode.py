@@ -133,6 +133,12 @@ def draw():
     global font
     clear_canvas()
     game_world.render()
+
+    if data.p1_score == 0:
+        font.draw(w_width * 1 / 100, w_height * 95 / 100, f'---Controls---', (255, 0, 0))
+        font.draw(w_width * 1 / 100, w_height * 90 / 100, f'[ENTER] - 1 Step Up', (255, 0, 0))
+        font.draw(w_width * 1 / 100, w_height * 85 / 100, f'[SPACE] - Turn + 1 Step Up', (255, 0, 0))
+
     font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score: {data.p1_score :^}', (255, 0, 0))
     font.draw(w_width * 73 / 100, w_height * 90 / 100, f'Best Score: {data.best_score :^}', (255, 0, 0))
 
