@@ -24,6 +24,7 @@ time_limit = None
 base_time_limit = 3.0
 min_time_limit = 1.0
 font = None
+bar = None
 
 def handle_events():
     global last_input_time
@@ -33,7 +34,7 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_mode(initc_mode)
-        else:
+        elif event.type == SDL_KEYDOWN:
             last_input_time = get_time()
             if data.p1_character == 1:
                 background.handle_event(event,char1.dir)
@@ -57,9 +58,10 @@ def handle_events():
 
 
 def init(*args):
-    global background, char1, char2, char3, stairs, font
+    global background, bar, char1, char2, char3, stairs, font
 
     font = load_font('../ENCR10B.TTF', 32)
+    bar = load_image('../image/timer.png')
 
 
     background = bg()
@@ -116,7 +118,7 @@ def update():
                     game_framework.change_mode(result_mode)
 
     if last_input_time is not None:
-        if get_time() - last_input_time > time_limit:  #5초 동안 입력 없음
+        if get_time() - last_input_time > time_limit:
             data.isp1alive = False
             if current_time == None:
                 current_time = get_time()
@@ -133,6 +135,25 @@ def draw():
     game_world.render()
     font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score: {data.p1_score :^}', (255, 0, 0))
     font.draw(w_width * 73 / 100, w_height * 90 / 100, f'Best Score: {data.best_score :^}', (255, 0, 0))
+
+    if last_input_time is not None and time_limit is not None:
+        remaining_time = max(0.0, time_limit - (get_time() - last_input_time))
+        ratio = remaining_time / time_limit
+
+        bar_width = int(w_width * 0.4)
+        bar_height = 20
+        x_left = w_width * 0.3
+        y = w_height * 0.95
+
+        #전체 바
+        draw_rectangle(x_left, y - bar_height // 2, x_left + bar_width, y + bar_height // 2)
+
+        #남은 바
+        current_width = int(bar_width * ratio)
+        if current_width > 0:
+            bar.clip_draw(0, 0, bar.w, bar.h, x_left + current_width // 2, y, current_width, bar_height)
+
+
     update_canvas()
 
 
