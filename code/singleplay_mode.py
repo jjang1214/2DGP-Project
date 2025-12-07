@@ -103,7 +103,7 @@ def update():
     game_world.update()
     game_world.handle_collisions()
 
-    time_limit = max(min_time_limit,base_time_limit - (data.p1_score / 500.0) * (base_time_limit - min_time_limit))
+    time_limit = max(min_time_limit,base_time_limit - (data.p1_score / 300.0) * (base_time_limit - min_time_limit))
 
     idx = len(data.p1_pattern) - 1
     if idx >= 0 and idx < len(data.stair_pattern):
