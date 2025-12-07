@@ -46,7 +46,7 @@ def draw():
 
     background.draw(w_width/2, w_height/2,w_width, w_height)
     if drawbg:
-        font.draw(w_width * 2.8 / 10, w_height * 30 / 100, f'PRESS [Enter] TO START', (0, 255, 0))
+        font.draw(w_width * 2.8 / 10, w_height * 30 / 100, f'PRESS [ENTER] TO START', (0, 255, 0))
 
     update_canvas()
 
