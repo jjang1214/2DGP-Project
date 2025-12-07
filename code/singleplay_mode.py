@@ -19,10 +19,14 @@ char2 = None
 char3 = None
 
 current_time = None
-
+last_input_time = None
+time_limit = None
+base_time_limit = 3.0
+min_time_limit = 1.0
 font = None
 
 def handle_events():
+    global last_input_time
     event_list = get_events()
     for event in event_list:
         if event.type == SDL_QUIT:
@@ -30,6 +34,7 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_mode(initc_mode)
         else:
+            last_input_time = get_time()
             if data.p1_character == 1:
                 background.handle_event(event,char1.dir)
                 for s in stairs:
@@ -91,15 +96,28 @@ def init(*args):
 
 
 def update():
+    global last_input_time, current_time, time_limit, base_time_limit, min_time_limit
+
     game_world.update()
     game_world.handle_collisions()
+
+    time_limit = max(min_time_limit,base_time_limit - (data.p1_score / 500.0) * (base_time_limit - min_time_limit))
 
     idx = len(data.p1_pattern) - 1
     if idx >= 0 and idx < len(data.stair_pattern):
         if data.stair_pattern[idx] != data.p1_pattern[idx]:
             print(f"{idx + 1}번 계단에서 실패!")
             data.isp1alive = False
-            global current_time
+            if current_time == None:
+                current_time = get_time()
+            else:
+                if get_time() - current_time > 2:
+                    #game_framework.quit()
+                    game_framework.change_mode(result_mode)
+
+    if last_input_time is not None:
+        if get_time() - last_input_time > time_limit:  #5초 동안 입력 없음
+            data.isp1alive = False
             if current_time == None:
                 current_time = get_time()
             else:
@@ -119,7 +137,7 @@ def draw():
 
 
 def finish():
-    global stairs, current_time
+    global stairs, current_time, last_input_time, time_limit
 
     stairs.clear()
     stair.initstairs = False
@@ -127,6 +145,8 @@ def finish():
     data.stair_pattern.clear()
     game_world.clear()
     current_time = None
+    last_input_time = None
+    time_limit = None
 
     data.p1_pattern.clear()
     data.isp1alive = True
