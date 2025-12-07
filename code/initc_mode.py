@@ -2,6 +2,7 @@ from pico2d import *
 
 from game_world import w_width, w_height
 import game_framework
+import initgame
 import initm_mode
 import singleplay_mode
 import multiplay_mode
@@ -46,7 +47,7 @@ def handle_events():
                     isp1selected = False
                     data.p1_character = 0
                 elif not isp1selected:
-                    game_framework.change_mode(initm_mode)
+                    game_framework.change_mode(initgame)
             elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
                 data.p1_character = 1
                 isp1selected = True
