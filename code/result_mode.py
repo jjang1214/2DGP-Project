@@ -56,7 +56,8 @@ def update():
     #if get_time() - result_time >= 5.0:
         #result_time = get_time()
     if restart:
-        game_framework.change_mode(initm_mode)
+        #game_framework.change_mode(initm_mode)
+        game_framework.change_mode(initc_mode)
 
 
 def draw():
@@ -100,9 +101,9 @@ def finish():
     global image1, image2, image3
     del image1, image2, image3
 
-    data.main_character = 0
+    data.p1_character = 0
     data.p1_score= 0
-    data.p2_score = 0
+    #data.p2_score = 0
 
 
 def pause(): pass

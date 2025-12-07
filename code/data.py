@@ -1,4 +1,5 @@
-playing_mode = 0
+#playing_mode = 0
+playing_mode = 1
 
 stair_pattern = []
 

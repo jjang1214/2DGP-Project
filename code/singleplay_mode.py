@@ -124,23 +124,10 @@ def finish():
     stair.initstairs = False
     stair.stair_count = 0
     data.stair_pattern.clear()
-    data.p1_pattern.clear()
     game_world.clear()
     current_time = None
 
-
-    if data.p1_character == 1:
-        char1.x = w_width / 2
-        char1.y = w_height / 2 - 100
-
-    elif data.p1_character == 2:
-        char2.x = w_width / 2
-        char2.y = w_height / 2 - 100
-
-    elif data.p1_character == 3:
-        char3.x = w_width / 2
-        char3.y = w_height / 2 - 100
-
+    data.p1_pattern.clear()
     data.isp1alive = True
 
 
