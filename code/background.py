@@ -93,7 +93,7 @@ class Background:
                 row += 1
 
             # 지면
-            ground_y = self.ground_y + self.offset_y
+            ground_y = self.tukground.h + self.offset_y
             x = w_width//2#-self.tukground.w * 2 + self.offset_x
             flip = False
             while x < w_width + self.tukground.w:
