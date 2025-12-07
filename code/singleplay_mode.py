@@ -113,7 +113,8 @@ def draw():
     global font
     clear_canvas()
     game_world.render()
-    font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score:{data.p1_score :^}', (255, 0, 0))
+    font.draw(w_width * 80 / 100, w_height * 80 / 100, f'Score: {data.p1_score :^}', (255, 0, 0))
+    font.draw(w_width * 73 / 100, w_height * 90 / 100, f'Best Score: {data.best_score :^}', (255, 0, 0))
     update_canvas()
 
 

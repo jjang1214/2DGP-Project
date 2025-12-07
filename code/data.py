@@ -12,3 +12,5 @@ p2_character = 0
 p2_pattern = []
 p2_score = 0
 isp2alive = True
+
+best_score = 0
