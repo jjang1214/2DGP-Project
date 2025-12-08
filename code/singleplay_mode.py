@@ -34,7 +34,7 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_mode(initc_mode)
-        elif event.type == SDL_KEYDOWN:
+        elif event.type == SDL_KEYDOWN and (event.key == SDLK_SPACE or event.key == SDLK_RETURN):
             last_input_time = get_time()
             if data.p1_character == 1:
                 background.handle_event(event,char1.dir)
