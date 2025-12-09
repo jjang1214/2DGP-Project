@@ -62,15 +62,15 @@ def handle_events():
 
 def init(*args):
     global background, bar, char1, char2, char3, stairs, font, bgm, gameover_m
-    bgm = load_music('../sound/bgm.mp3')
+    bgm = load_music('sound/bgm.mp3')
     bgm.set_volume(32)
-    gameover_m = load_music('../sound/gameover.mp3')
+    gameover_m = load_music('sound/gameover.mp3')
     gameover_m.set_volume(32)
 
     #bgm.repeat_play()
 
-    font = load_font('../font/ENCR10B.TTF', 32)
-    bar = load_image('../image/timer.png')
+    font = load_font('font/ENCR10B.TTF', 32)
+    bar = load_image('image/timer.png')
 
 
     background = bg()

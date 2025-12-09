@@ -11,7 +11,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{63C0248C-73D0-47BD-9504-455F02920ADA}
+AppId={{65D883C9-BDE1-49D2-955B-77784AF4F920}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -47,21 +47,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "C:\2DGP\2DGP-Project\dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\font\ENCR10B.TTF"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\daytime.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\exclamation_mark.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\girl1_Idle.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\girl1_Walk.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\girl2_Idle.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\girl2_Walk.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\girl3_Idle.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\girl3_Walk.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\stair.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\timer.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\title.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\image\tuk.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\sound\bgm.mp3"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\2DGP\2DGP-Project\dist\sound\gameover.mp3"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\2DGP\2DGP-Project\dist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

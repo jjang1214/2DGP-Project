@@ -112,7 +112,7 @@ def handle_events():
 def init(*args):
     global isp1selected,isp2selected, bgm
 
-    bgm = load_music('../sound/bgm.mp3')
+    bgm = load_music('sound/bgm.mp3')
     bgm.set_volume(32)
     bgm.repeat_play()
 
@@ -130,12 +130,12 @@ def init(*args):
 
     global background, image1, image2, image3, font
 
-    background = load_image('../image/tuk.png')
-    image1 = load_image('../image/girl1_Idle.png')
-    image2 = load_image('../image/girl2_Idle.png')
-    image3 = load_image('../image/girl3_Idle.png')
+    background = load_image('image/tuk.png')
+    image1 = load_image('image/girl1_Idle.png')
+    image2 = load_image('image/girl2_Idle.png')
+    image3 = load_image('image/girl3_Idle.png')
 
-    font = load_font('../font/ENCR10B.TTF', 32)
+    font = load_font('font/ENCR10B.TTF', 32)
 
 
 

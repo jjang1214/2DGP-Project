@@ -41,12 +41,12 @@ def init(*args):
 
     global background, image1, image2, image3, font
 
-    background = load_image('../image/tuk.png')
-    image1 = load_image('../image/girl1_Idle.png')
-    image2 = load_image('../image/girl2_Idle.png')
-    image3 = load_image('../image/girl3_Idle.png')
+    background = load_image('image/tuk.png')
+    image1 = load_image('image/girl1_Idle.png')
+    image2 = load_image('image/girl2_Idle.png')
+    image3 = load_image('image/girl3_Idle.png')
 
-    font = load_font('../font/ENCR10B.TTF', 32)
+    font = load_font('font/ENCR10B.TTF', 32)
 
 def update():
     if data.playing_mode != 0:

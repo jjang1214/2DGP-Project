@@ -162,9 +162,9 @@ class character2:
         self.x,self.y = w_width/2, w_height / 2-100
         self.frame = 0
         self.dir = -1
-        self.image_idle = load_image('../image/girl2_Idle.png')
-        self.image_move = load_image('../image/girl2_Walk.png')
-        self.image_exclamation = load_image('../image/exclamation_mark.png')
+        self.image_idle = load_image('image/girl2_Idle.png')
+        self.image_move = load_image('image/girl2_Walk.png')
+        self.image_exclamation = load_image('image/exclamation_mark.png')
 
         self.IDLE=Idle(self)
         self.MOVE=Move(self)

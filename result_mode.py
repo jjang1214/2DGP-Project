@@ -56,12 +56,12 @@ def init(*args):
     global background, image1, image2, image3, font, result_time, restart, new_record
     restart = False
 
-    background = load_image('../image/tuk.png')
-    image1 = load_image('../image/girl1_Idle.png')
-    image2 = load_image('../image/girl2_Idle.png')
-    image3 = load_image('../image/girl3_Idle.png')
+    background = load_image('image/tuk.png')
+    image1 = load_image('image/girl1_Idle.png')
+    image2 = load_image('image/girl2_Idle.png')
+    image3 = load_image('image/girl3_Idle.png')
 
-    font = load_font('../font/ENCR10B.TTF', 32)
+    font = load_font('font/ENCR10B.TTF', 32)
 
     result_time = get_time()
 
