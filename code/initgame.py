@@ -7,6 +7,7 @@ import initc_mode
 
 background = None
 font = None
+bgm = None
 
 drawbg = True
 last_time = 0.0
@@ -24,10 +25,13 @@ def handle_events():
 
 
 def init(*args):
-    global background, font, last_time
+    global background, font, bgm, last_time
 
     background = load_image('../image/initbg.png')
     font = load_font('../ENCR10B.TTF', 48)
+    bgm = load_music('../sound/music.mp3')
+    bgm.set_volume(32)
+    bgm.repeat_play()
 
     last_time = get_time()
 
