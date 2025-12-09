@@ -14,6 +14,9 @@ import initc_mode,result_mode
 
 #global stairs
 
+bgm = None
+gameover_m = None
+
 char1 = None
 char2 = None
 char3 = None
@@ -58,7 +61,13 @@ def handle_events():
 
 
 def init(*args):
-    global background, bar, char1, char2, char3, stairs, font
+    global background, bar, char1, char2, char3, stairs, font, bgm, gameover_m
+    bgm = load_music('../sound/bgm.mp3')
+    bgm.set_volume(32)
+    gameover_m = load_music('../sound/gameover.mp3')
+    gameover_m.set_volume(32)
+
+    #bgm.repeat_play()
 
     font = load_font('../ENCR10B.TTF', 32)
     bar = load_image('../image/timer.png')
@@ -98,7 +107,7 @@ def init(*args):
 
 
 def update():
-    global last_input_time, current_time, time_limit, base_time_limit, min_time_limit
+    global last_input_time, current_time, time_limit, base_time_limit, min_time_limit, bgm, gameover_m
 
     game_world.update()
     game_world.handle_collisions()
@@ -112,6 +121,8 @@ def update():
             data.isp1alive = False
             if current_time == None:
                 current_time = get_time()
+                bgm.stop()
+                gameover_m.play()
             else:
                 if get_time() - current_time > 2:
                     #game_framework.quit()

@@ -3,6 +3,7 @@ from pico2d import *
 from game_world import w_width, w_height
 import game_framework
 import initc_mode
+import data
 
 
 background = None
@@ -29,7 +30,7 @@ def init(*args):
 
     background = load_image('../image/initbg.png')
     font = load_font('../ENCR10B.TTF', 48)
-    bgm = load_music('../sound/music.mp3')
+    bgm = load_music('../sound/bgm.mp3')
     bgm.set_volume(32)
     bgm.repeat_play()
 

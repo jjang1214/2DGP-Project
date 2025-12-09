@@ -23,6 +23,7 @@ image1 = None
 image2 = None
 image3 = None
 font = None
+bgm = None
 
 frame1 = 0
 frame2 = 0
@@ -109,7 +110,12 @@ def handle_events():
                         start_time = get_time()
 
 def init(*args):
-    global isp1selected,isp2selected
+    global isp1selected,isp2selected, bgm
+
+    bgm = load_music('../sound/bgm.mp3')
+    bgm.set_volume(32)
+    bgm.repeat_play()
+
     isp1selected = False
     isp2selected = False
 

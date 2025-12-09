@@ -1,3 +1,5 @@
+from pico2d import load_music
+
 #playing_mode = 0
 playing_mode = 1
 
