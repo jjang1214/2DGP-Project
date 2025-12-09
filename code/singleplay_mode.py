@@ -69,7 +69,7 @@ def init(*args):
 
     #bgm.repeat_play()
 
-    font = load_font('../ENCR10B.TTF', 32)
+    font = load_font('../font/ENCR10B.TTF', 32)
     bar = load_image('../image/timer.png')
 
 

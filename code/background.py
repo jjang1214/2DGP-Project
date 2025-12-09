@@ -35,7 +35,7 @@ class Background:
         self.ground_y = self.tukground.h / 2
         self.offset_x = 0
         self.offset_y = 0
-        self.font = load_font('../ENCR10B.TTF',32)
+        self.font = load_font('../font/ENCR10B.TTF',32)
 
     def move(self, direction):
         dx = 70 if direction == 'right' else -70

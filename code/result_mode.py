@@ -61,7 +61,7 @@ def init(*args):
     image2 = load_image('../image/girl2_Idle.png')
     image3 = load_image('../image/girl3_Idle.png')
 
-    font = load_font('../ENCR10B.TTF', 32)
+    font = load_font('../font/ENCR10B.TTF', 32)
 
     result_time = get_time()
 

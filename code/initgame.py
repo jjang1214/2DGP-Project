@@ -29,7 +29,7 @@ def init(*args):
     global background, font, bgm, last_time
 
     background = load_image('../image/title.png')
-    font = load_font('../ENCR10B.TTF', 48)
+    font = load_font('../font/ENCR10B.TTF', 48)
     bgm = load_music('../sound/bgm.mp3')
     bgm.set_volume(32)
     bgm.repeat_play()
