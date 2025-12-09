@@ -90,7 +90,7 @@ class Stair:
         self.offset_x = 0
         self.offset_y = 0
         if Stair.image is None:
-            Stair.image = load_image('../image/stair.png')
+            Stair.image = load_image('image/stair.png')
 
     def move(self, direction):
         dx = 70 if direction == 'right' else -70
