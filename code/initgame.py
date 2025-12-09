@@ -28,7 +28,7 @@ def handle_events():
 def init(*args):
     global background, font, bgm, last_time
 
-    background = load_image('../image/initbg.png')
+    background = load_image('../image/title.png')
     font = load_font('../ENCR10B.TTF', 48)
     bgm = load_music('../sound/bgm.mp3')
     bgm.set_volume(32)
